@@ -1248,23 +1248,40 @@ function AuditTab() {
 // TAB: WAR COSTS (Live Running Counter)
 // ════════════════════════════════════════════
 function CostsTab() {
-  // Anchored: $5B+ as of Mar 2. Burn rate ~$891M/day per CSIS, ~$1B/day per NBC sources
-  // War started Feb 28, 2026 00:00 UTC
+  // SPLIT BURN RATE MODEL
+  // Phase 1: Combat (Feb 28 - Apr 8) = $891.4M/day per CSIS
+  // Phase 2: Ceasefire (Apr 8+) = ~$450M/day (carriers deployed, mine clearance, 2,200 Marines, forces on station)
   const WAR_START = new Date("2026-02-28T00:00:00Z").getTime();
-  const ANCHOR_DATE = new Date("2026-04-11T12:00:00Z").getTime();
-  const ANCHOR_COST = 40_700_000_000; // ~$40.7B as of Apr 11 (Day 43. $891M/day x 43 = $38.3B + acceleration. Penn Wharton: $40-95B range)
-  const BURN_RATE_PER_SEC = 891_400_000 / 86400; // $891.4M/day = ~$10,317/sec (CSIS)
+  const CEASEFIRE_START = new Date("2026-04-08T02:00:00Z").getTime(); // Apr 8, 2:00 AM IRST = when ceasefire took effect
+
+  const COMBAT_RATE_PER_DAY = 891_400_000;  // $891.4M/day (CSIS confirmed)
+  const CEASEFIRE_RATE_PER_DAY = 450_000_000; // $450M/day (5 CSGs, mine ops, deployed forces, no offensive strikes)
+  const COMBAT_RATE_PER_SEC = COMBAT_RATE_PER_DAY / 86400;
+  const CEASEFIRE_RATE_PER_SEC = CEASEFIRE_RATE_PER_DAY / 86400;
+
+  // Pre-calculated: combat phase cost (Feb 28 00:00 UTC → Apr 8 02:00 UTC = ~39.08 days)
+  const COMBAT_DAYS = (CEASEFIRE_START - WAR_START) / 86400000;
+  const COMBAT_TOTAL = COMBAT_DAYS * COMBAT_RATE_PER_DAY; // ~$34.8B
 
   const [cost, setCost] = useState(0);
   const [elapsed, setElapsed] = useState(0);
+  const [phase, setPhase] = useState("ceasefire");
 
   useEffect(() => {
     const tick = () => {
       const now = Date.now();
-      const secSinceAnchor = (now - ANCHOR_DATE) / 1000;
-      const total = ANCHOR_COST + secSinceAnchor * BURN_RATE_PER_SEC;
-      setCost(total);
       setElapsed(Math.floor((now - WAR_START) / 1000));
+      if (now < CEASEFIRE_START) {
+        // Still in combat phase
+        const secSinceStart = (now - WAR_START) / 1000;
+        setCost(secSinceStart * COMBAT_RATE_PER_SEC);
+        setPhase("combat");
+      } else {
+        // Ceasefire phase
+        const secSinceCeasefire = (now - CEASEFIRE_START) / 1000;
+        setCost(COMBAT_TOTAL + secSinceCeasefire * CEASEFIRE_RATE_PER_SEC);
+        setPhase("ceasefire");
+      }
     };
     tick();
     const t = setInterval(tick, 100);
@@ -1364,13 +1381,13 @@ function CostsTab() {
 
           {/* Burn rate */}
           <div style={{ fontSize: 10, color: P.tx3, fontFamily: fn, marginTop: 10 }}>
-            rate: <span style={{ color: P.flm }}>${Math.round(BURN_RATE_PER_SEC).toLocaleString()}/sec</span> · <span style={{ color: P.tx2 }}>~$891,400,000/day</span>
+            rate: <span style={{ color: P.flm }}>${Math.round(phase === "combat" ? COMBAT_RATE_PER_SEC : CEASEFIRE_RATE_PER_SEC).toLocaleString()}/sec</span> · <span style={{ color: P.tx2 }}>{phase === "combat" ? "~$891M/day (combat)" : "~$450M/day (ceasefire)"}</span>
           </div>
 
           {/* Sustained ops badge */}
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginTop: 10, padding: "5px 14px", border: `1px solid ${P.fire}30`, borderRadius: 6, background: `${P.fire}08` }}>
-            <span style={{ fontSize: 9, fontWeight: 700, color: P.tx, letterSpacing: 2, fontFamily: fn }}>SUSTAINED OPERATIONS</span>
-            <span style={{ fontSize: 9, fontWeight: 700, color: P.flm, fontFamily: fn }}>~$891M/day</span>
+            <span style={{ fontSize: 9, fontWeight: 700, color: P.tx, letterSpacing: 2, fontFamily: fn }}>{phase === "combat" ? "ACTIVE COMBAT" : "CEASEFIRE OPS"}</span>
+            <span style={{ fontSize: 9, fontWeight: 700, color: P.flm, fontFamily: fn }}>{phase === "combat" ? "~$891M/day" : "~$450M/day"}</span>
           </div>
         </div>
 
@@ -1417,7 +1434,7 @@ function CostsTab() {
       {/* Per-taxpayer + equivalency */}
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 14 }}>
         <KPI label="Per US Taxpayer" value={`$${perTaxpayer.toFixed(2)}`} accent={P.fire} sub="~150M filers" />
-        <KPI label="Burn Rate" value="$891M/day" accent={P.flm} sub="$10,317/second" />
+        <KPI label="Burn Rate" value={phase === "combat" ? "$891M/day" : "$450M/day"} accent={P.flm} sub={phase === "combat" ? "$10,317/sec (combat)" : "$5,208/sec (ceasefire — carriers, mine ops)"} />
         <KPI label="SNAP Equiv." value={`${(snapBenefits/1e6).toFixed(1)}M people`} accent={P.sun} sub="1 year of benefits" />
         <KPI label="Teacher Salaries" value={`${(teachers/1000).toFixed(0)}K`} accent={P.leaf} sub="@ $65K/year" />
         <KPI label="US Homes" value={`${(homes/1000).toFixed(1)}K`} accent={P.aqua} sub="@ $350K avg" />
@@ -1451,7 +1468,8 @@ function CostsTab() {
       <div style={{ border: `1px solid ${P.sun}20`, borderRadius: 10, padding: 14, marginTop: 12, background: `${P.sun}06` }}>
         <div style={{ fontSize: 10, color: P.sun, fontWeight: 700, letterSpacing: 1.5, fontFamily: fn, marginBottom: 6 }}>COST CONTEXT (LATEST — MAR 6)</div>
         {[
-          ["$891.4M/day", "CSIS confirmed burn rate. Air ops $30M/day, naval $15M/day, ground $1.6M/day", P.fire],
+          ["$891.4M/day", "CSIS combat burn rate (Feb 28 – Apr 8). Air ops $30M/day, naval $15M/day, munitions", P.fire],
+          ["$450M/day", "Ceasefire burn rate (Apr 8+). 5 CSGs on station, mine clearance, 2,200 Marines, no strikes", P.sun],
           ["$3.7B / 100hrs", "CSIS: first 100 hours of Operation Epic Fury. $3.5B was unbudgeted", P.sun],
           ["$5B+ in 3 days", "Center for American Progress: 'conservative estimate' as of Mar 2", P.flm],
           ["$40-95B", "Penn Wharton: estimated cost of a 2-month war depending on ground troops", P.vio],
@@ -1520,6 +1538,7 @@ export default function App() {
           .cm-subtitle{display:none!important}
           .cm-header-right{gap:6px!important}
           .cm-header-right>div:last-child{display:none!important}
+          .cm-tabs{flex-wrap:nowrap!important;overflow-x:auto!important}
           .cm-kpi-row{gap:6px!important}
           .cm-kpi{min-width:100px!important;padding:8px 10px!important}
           .cm-kpi-val{font-size:18px!important}
@@ -1560,7 +1579,7 @@ export default function App() {
       </div>
 
       {/* TABS */}
-      <div className="cm-tabs" style={{display:"flex",borderBottom:`1px solid ${P.edg}`,padding:"0 10px",overflowX:"auto",background:P.bg}}>
+      <div className="cm-tabs" style={{display:"flex",flexWrap:"wrap",borderBottom:`1px solid ${P.edg}`,padding:"0 10px",background:P.bg}}>
         {TABS.map(t=>(
           <button key={t.id} onClick={()=>setTab(t.id)} className="cm-tab-btn" style={{
             display:"flex",alignItems:"center",gap:5,padding:"10px 13px",background:"transparent",
