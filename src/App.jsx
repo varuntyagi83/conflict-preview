@@ -1472,9 +1472,9 @@ function CostsTab() {
 // MAIN APP
 // ════════════════════════════════════════════
 const TABS=[
-  {id:"dash",lb:"OVERVIEW",cl:"#F5853F"},{id:"cost",lb:"WAR COSTS",cl:"#F0544F"},{id:"wpn",lb:"WEAPONS",cl:"#E9C53A"},{id:"map",lb:"STRIKE MAP",cl:"#4C9CF5"},
-  {id:"tl",lb:"TIMELINE",cl:"#30C77B"},{id:"mkt",lb:"MARKETS",cl:"#9B6DF5"},{id:"pred",lb:"FORECAST",cl:"#34BFC9"},
-  {id:"spill",lb:"SPILLOVER",cl:"#E96DA0"},{id:"src",lb:"SOURCES",cl:"#21AD99"},{id:"ai",lb:"AI",cl:"#4C9CF5"},{id:"aud",lb:"AUDIT",cl:"#E9C53A"},
+  {id:"dash",lb:"OVERVIEW",ic:"◈",cl:"#F5853F"},{id:"cost",lb:"WAR COSTS",ic:"$",cl:"#F0544F"},{id:"wpn",lb:"WEAPONS",ic:"⚔",cl:"#E9C53A"},{id:"map",lb:"STRIKE MAP",ic:"◎",cl:"#4C9CF5"},
+  {id:"tl",lb:"TIMELINE",ic:"▸",cl:"#30C77B"},{id:"mkt",lb:"MARKETS",ic:"△",cl:"#9B6DF5"},{id:"pred",lb:"FORECAST",ic:"◇",cl:"#34BFC9"},
+  {id:"spill",lb:"SPILLOVER",ic:"⊕",cl:"#E96DA0"},{id:"src",lb:"SOURCES",ic:"◉",cl:"#21AD99"},{id:"ai",lb:"AI",ic:"⬡",cl:"#4C9CF5"},{id:"aud",lb:"AUDIT",ic:"⚖",cl:"#E9C53A"},
 ];
 
 export default function App() {
@@ -1567,7 +1567,7 @@ export default function App() {
             border:"none",borderBottom:tab===t.id?`2px solid ${P.sun}`:"2px solid transparent",
             color:tab===t.id?P.sun:P.tx3,fontSize:11,fontWeight:700,cursor:"pointer",
             fontFamily:fn,letterSpacing:.8,whiteSpace:"nowrap",transition:"all .2s"}}>
-            <span style={{width:6,height:6,borderRadius:"50%",background:tab===t.id?t.cl:`${t.cl}50`,flexShrink:0}}/>{t.lb}
+            <span style={{color:tab===t.id?t.cl:`${t.cl}60`,fontSize:11,flexShrink:0}}>{t.ic}</span>{t.lb}
           </button>))}
       </div>
       </div>{/* END STICKY */}
