@@ -1472,9 +1472,9 @@ function CostsTab() {
 // MAIN APP
 // ════════════════════════════════════════════
 const TABS=[
-  {id:"dash",lb:"OVERVIEW"},{id:"cost",lb:"COSTS"},{id:"wpn",lb:"WEAPONS"},{id:"map",lb:"MAP"},
-  {id:"tl",lb:"TIMELINE"},{id:"mkt",lb:"MARKETS"},{id:"pred",lb:"FORECAST"},
-  {id:"spill",lb:"SPILLOVER"},{id:"src",lb:"SOURCES"},{id:"ai",lb:"AI"},{id:"aud",lb:"AUDIT"},
+  {id:"dash",lb:"OVERVIEW",cl:"#F5853F"},{id:"cost",lb:"WAR COSTS",cl:"#F0544F"},{id:"wpn",lb:"WEAPONS",cl:"#E9C53A"},{id:"map",lb:"STRIKE MAP",cl:"#4C9CF5"},
+  {id:"tl",lb:"TIMELINE",cl:"#30C77B"},{id:"mkt",lb:"MARKETS",cl:"#9B6DF5"},{id:"pred",lb:"FORECAST",cl:"#34BFC9"},
+  {id:"spill",lb:"SPILLOVER",cl:"#E96DA0"},{id:"src",lb:"SOURCES",cl:"#21AD99"},{id:"ai",lb:"AI",cl:"#4C9CF5"},{id:"aud",lb:"AUDIT",cl:"#E9C53A"},
 ];
 
 export default function App() {
@@ -1563,11 +1563,11 @@ export default function App() {
       <div className="cm-tabs" style={{display:"flex",flexWrap:"wrap",borderBottom:`1px solid ${P.edg}`,padding:"0 10px",background:P.bg}}>
         {TABS.map(t=>(
           <button key={t.id} onClick={()=>setTab(t.id)} className="cm-tab-btn" style={{
-            padding:"10px 11px",background:"transparent",
+            display:"flex",alignItems:"center",gap:5,padding:"10px 11px",background:"transparent",
             border:"none",borderBottom:tab===t.id?`2px solid ${P.sun}`:"2px solid transparent",
             color:tab===t.id?P.sun:P.tx3,fontSize:11,fontWeight:700,cursor:"pointer",
             fontFamily:fn,letterSpacing:.8,whiteSpace:"nowrap",transition:"all .2s"}}>
-            {t.lb}
+            <span style={{width:6,height:6,borderRadius:"50%",background:tab===t.id?t.cl:`${t.cl}50`,flexShrink:0}}/>{t.lb}
           </button>))}
       </div>
       </div>{/* END STICKY */}
