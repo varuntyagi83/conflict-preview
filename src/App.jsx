@@ -209,17 +209,16 @@ function HBar({val,max=100,color,h=5}) {
 }
 
 function KPI({label,value,accent,sub,trend,trendBad}) {
-  // trend: "up" or "down". trendBad: if true, this direction is alarming (red). Default: up=green, down=red
   const arrow = trend === "up" ? "▲" : trend === "down" ? "▼" : null;
   const arrowColor = trendBad ? P.fire : P.leaf;
   return (
-    <div style={{background:P.srf,border:`1px solid ${accent||P.edg}35`,borderRadius:10,padding:"10px 13px",flex:"1 1 120px",minWidth:120}}>
-      <div style={{fontSize:11,color:accent||P.tx3,textTransform:"uppercase",letterSpacing:1.5,fontWeight:700,fontFamily:fn}}>{label}</div>
+    <div className="cm-kpi" style={{background:P.srf,border:`1px solid ${accent||P.edg}35`,borderRadius:10,padding:"10px 13px",flex:"1 1 120px",minWidth:120}}>
+      <div className="cm-kpi-label" style={{fontSize:11,color:accent||P.tx3,textTransform:"uppercase",letterSpacing:1.5,fontWeight:700,fontFamily:fn}}>{label}</div>
       <div style={{display:"flex",alignItems:"center",gap:6,marginTop:3}}>
-        <span style={{fontSize:23,fontWeight:800,color:P.tx,fontFamily:fn}}>{value}</span>
+        <span className="cm-kpi-val" style={{fontSize:23,fontWeight:800,color:P.tx,fontFamily:fn}}>{value}</span>
         {arrow && <span style={{fontSize:14,color:arrowColor,fontWeight:800,lineHeight:1}}>{arrow}</span>}
       </div>
-      {sub&&<div style={{fontSize:11,color:P.tx3,marginTop:2}}>{sub}</div>}
+      {sub&&<div className="cm-kpi-sub" style={{fontSize:11,color:P.tx3,marginTop:2}}>{sub}</div>}
     </div>
   );
 }
@@ -392,7 +391,7 @@ function OverviewTab() {
   const day = (()=>{const now=new Date();const start=new Date(2026,1,28);now.setHours(0,0,0,0);start.setHours(0,0,0,0);return Math.round((now-start)/864e5)+1})();
   return (
     <div>
-      <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:12}}>
+      <div className="cm-kpi-row" style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:12}}>
         <KPI label="War Day" value={day} accent={P.flm} sub="Since Feb 28. CEASEFIRE Apr 7-8"/>
         <KPI label="Iran Killed" value="3,400+" accent={P.fire} sub="HRANA: 1,600+ civilians. 2,076+ per AJ. 3.2M displaced" trend="up" trendBad/>
         <KPI label="Israel" value="23+ killed" accent={P.vio} sub="Thousands wounded. 254 killed in Lebanon Apr 8 strike"/>
@@ -400,7 +399,7 @@ function OverviewTab() {
         <KPI label="Lebanon" value="1,950+" accent={P.rose} sub="6,436 wounded. 165 children killed. 357 dead Apr 8" trend="up" trendBad/>
         <KPI label="Gulf States" value="28+ killed" accent={P.sun} sub="UAE: 520 BMs + 2,221 drones intercepted" trend="up" trendBad/>
       </div>
-      <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:14}}>
+      <div className="cm-kpi-row" style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:14}}>
         <KPI label="Brent Oil" value="~$93" accent={P.sun} sub="Crashed from $110+ on ceasefire. Rising on Hormuz delays" trend="down"/>
         <KPI label="WTI Crude" value="~$94" accent={P.sun} sub="Only 15 ships through Hormuz (vs 130/day normal)" trend="down"/>
         <KPI label="Gold" value="~$4,800" accent={P.sun} sub="Haven bid fading on ceasefire" trend="down"/>
@@ -408,7 +407,7 @@ function OverviewTab() {
         <KPI label="S&P 500" value="~6,800" accent={P.leaf} sub="Recovering. -5.5% from ATH. 'Fragile truce'" trend="up"/>
         <KPI label="US Gas" value="$4.14/gal" accent={P.fire} sub="+39% since war. Months to normalize oil flows" trend="up" trendBad/>
       </div>
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+      <div className="cm-grid2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
         {[{t:"COALITION (40 DAYS)",cl:P.sky,items:["5+ weeks of sustained strikes","Kharg Island oil hub struck","Universities, bridges, power plants targeted","43+ warships destroyed. 16+ minelayers eliminated","Ceasefire Apr 7-8 — 2 weeks. Islamabad Talks begin","Israel: Op Eternal Darkness on Lebanon — NOT covered"]},
           {t:"IRAN RETALIATION",cl:P.fire,items:["500+ BMs, 2,000+ drones fired over 40 days","Strait of Hormuz closed 5+ weeks — IEA: largest supply disruption ever","UAE alone: 520 BMs + 2,221 drones + 26 cruise missiles intercepted","Tehran Toll Booth — charging ships in Chinese Yuan","Houthis entered the war. Bab al-Mandab threatened","Ceasefire: Hormuz reopening with 'coordination.' Fragile"]}
         ].map((col,ci)=>(
@@ -418,7 +417,7 @@ function OverviewTab() {
           </div>
         ))}
       </div>
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+      <div className="cm-grid2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
         <BarChart title="CASUALTIES BY REGION (40 DAYS)" data={[
           {label:"Iran",val:3400,color:P.fire,display:"3,400+ (HRANA)"},
           {label:"Lebanon",val:1400,color:P.rose,display:"1,400+"},
@@ -968,7 +967,7 @@ function MarketsTab() {
   const dn = "▼";
   return (
     <div>
-      <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:14}}>
+      <div className="cm-kpi-row" style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:14}}>
         <KPI label="Brent Crude" value="~$92" accent={P.leaf} sub={`${dn} -16% ceasefire crash. Biggest drop in 6 yrs`}/>
         <KPI label="WTI Crude" value="~$93" accent={P.leaf} sub={`${dn} -17%. Was $110+ before deal`}/>
         <KPI label="Gold" value="~$4,804" accent={P.sun} sub={`${dn} Haven bid fading post-ceasefire`}/>
@@ -1020,7 +1019,7 @@ function MarketsTab() {
         {sym:"UAL",open:0,close:-5.5,high:0.5,low:-8,color:P.fire},
         {sym:"KOSPI",open:0,close:-12,high:0,low:-14,color:P.fire},
       ]}/>
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+      <div className="cm-grid2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
         <MiniBarGroup title="DEFENSE & ENERGY GAINS" height={130} data={[
           {label:"LMT",val:14.9,color:P.leaf,display:"+14.9%"},
           {label:"NOC",val:10.9,color:P.leaf,display:"+10.9%"},
@@ -1513,19 +1512,45 @@ export default function App() {
         ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:${P.bg}}::-webkit-scrollbar-thumb{background:${P.edg};border-radius:3px}
         button{font-family:inherit}
         body{background:${P.bg};transition:background .3s}
+        .cm-sticky{position:sticky;top:0;z-index:100}
+        .cm-tabs::-webkit-scrollbar{height:3px}
+        .cm-tabs::-webkit-scrollbar-thumb{background:${P.edg};border-radius:2px}
+        @media(max-width:768px){
+          .cm-title{font-size:16px!important;letter-spacing:2px!important}
+          .cm-subtitle{display:none!important}
+          .cm-header-right{gap:6px!important}
+          .cm-header-right>div:last-child{display:none!important}
+          .cm-kpi-row{gap:6px!important}
+          .cm-kpi{min-width:100px!important;padding:8px 10px!important}
+          .cm-kpi-val{font-size:18px!important}
+          .cm-kpi-label{font-size:9px!important;letter-spacing:1px!important}
+          .cm-kpi-sub{font-size:9px!important}
+          .cm-grid2{grid-template-columns:1fr!important}
+          .cm-content{padding:10px 10px!important}
+          .cm-tab-btn{padding:8px 9px!important;font-size:9px!important}
+          .cm-footer{flex-direction:column;text-align:center}
+        }
+        @media(max-width:480px){
+          .cm-title{font-size:13px!important}
+          .cm-kpi{min-width:calc(50% - 6px)!important;flex:0 0 calc(50% - 6px)!important}
+          .cm-kpi-val{font-size:16px!important}
+          .cm-tab-btn{padding:7px 7px!important;font-size:8px!important;gap:3px!important}
+        }
       `}</style>
 
+      {/* STICKY HEADER + TABS */}
+      <div className="cm-sticky" style={{background:P.bg,transition:"background .3s"}}>
       {/* HEADER */}
       <div style={{background:isDark?"linear-gradient(135deg,#0C0610,#080C14 60%,#0A0E16)":`linear-gradient(135deg,#E8ECF2,#F4F6F9 60%,#EAEFF5)`,borderBottom:`1px solid ${P.fire}15`,padding:"10px 13px"}}>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
           <div style={{display:"flex",alignItems:"center",gap:10}}>
             <Blink color={P.fire} size={10}/>
             <div>
-              <span style={{fontSize:25,fontWeight:800,color:P.fire,letterSpacing:4,fontFamily:fn}}>CONFLICT MONITOR</span>
-              <span style={{fontSize:11,color:P.tx3,marginLeft:12,fontFamily:fn}}>EPIC FURY · TRUE PROMISE IV · CEASEFIRE APR 8 · ISLAMABAD TALKS LIVE</span>
+              <span className="cm-title" style={{fontSize:25,fontWeight:800,color:P.fire,letterSpacing:4,fontFamily:fn}}>CONFLICT MONITOR</span>
+              <span className="cm-subtitle" style={{fontSize:11,color:P.tx3,marginLeft:12,fontFamily:fn}}>EPIC FURY · TRUE PROMISE IV · CEASEFIRE APR 8 · ISLAMABAD TALKS LIVE</span>
             </div>
           </div>
-          <div style={{display:"flex",alignItems:"center",gap:10}}>
+          <div className="cm-header-right" style={{display:"flex",alignItems:"center",gap:10}}>
             <ThemeToggle mode={mode} setMode={setMode} P={P}/>
             <Blink color={P.fire} size={6}/>
             <span style={{fontSize:11,color:P.fire,fontFamily:fn,fontWeight:700}}>DAY {(()=>{const now=new Date();const start=new Date(2026,1,28);now.setHours(0,0,0,0);start.setHours(0,0,0,0);return Math.round((now-start)/864e5)+1})()}</span>
@@ -1535,9 +1560,9 @@ export default function App() {
       </div>
 
       {/* TABS */}
-      <div style={{display:"flex",borderBottom:`1px solid ${P.edg}`,padding:"0 10px",overflowX:"auto"}}>
+      <div className="cm-tabs" style={{display:"flex",borderBottom:`1px solid ${P.edg}`,padding:"0 10px",overflowX:"auto",background:P.bg}}>
         {TABS.map(t=>(
-          <button key={t.id} onClick={()=>setTab(t.id)} style={{
+          <button key={t.id} onClick={()=>setTab(t.id)} className="cm-tab-btn" style={{
             display:"flex",alignItems:"center",gap:5,padding:"10px 13px",background:"transparent",
             border:"none",borderBottom:tab===t.id?`2px solid ${P.sun}`:"2px solid transparent",
             color:tab===t.id?P.sun:P.tx3,fontSize:11,fontWeight:700,cursor:"pointer",
@@ -1545,9 +1570,10 @@ export default function App() {
             <span style={{fontSize:11,opacity:.7}}>{t.ic}</span> {t.lb}
           </button>))}
       </div>
+      </div>{/* END STICKY */}
 
       {/* CONTENT */}
-      <div style={{padding:"16px 18px",minHeight:480}}>
+      <div className="cm-content" style={{padding:"16px 18px",minHeight:480}}>
         {tab==="dash"&&<OverviewTab/>}
         {tab==="cost"&&<CostsTab/>}
         {tab==="wpn"&&<WeaponsTab/>}
@@ -1565,7 +1591,7 @@ export default function App() {
       <Ticker items={headlines}/>
 
       {/* FOOTER */}
-      <div style={{padding:"8px 18px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:4}}>
+      <div className="cm-footer" style={{padding:"8px 18px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:4}}>
         <div style={{fontSize:11,color:P.tx4,fontFamily:fn}}>CENTCOM · Bellingcat · Al Jazeera · CNN · NBC · NPR · Goldman Sachs · Morgan Stanley · ACLED · WHO · Kpler</div>
         <div style={{fontSize:11,color:P.tx4,fontFamily:fn}}>Built by <b style={{color:P.tx2}}>Varun Tyagi</b> · Claude Opus + Sonnet</div>
       </div>
