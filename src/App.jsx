@@ -1472,9 +1472,9 @@ function CostsTab() {
 // MAIN APP
 // ════════════════════════════════════════════
 const TABS=[
-  {id:"dash",lb:"OVERVIEW",ic:"◈"},{id:"cost",lb:"WAR COSTS",ic:"$"},{id:"wpn",lb:"WEAPONS",ic:"⚔"},{id:"map",lb:"STRIKE MAP",ic:"◎"},
-  {id:"tl",lb:"TIMELINE",ic:"▸"},{id:"mkt",lb:"MARKETS",ic:"△"},{id:"pred",lb:"FORECASTS",ic:"◇"},
-  {id:"spill",lb:"SPILLOVER",ic:"⊕"},{id:"src",lb:"SOURCES",ic:"◉"},{id:"ai",lb:"AI PIPELINE",ic:"⬡"},{id:"aud",lb:"BIAS AUDIT",ic:"⚖"},
+  {id:"dash",lb:"OVERVIEW"},{id:"cost",lb:"COSTS"},{id:"wpn",lb:"WEAPONS"},{id:"map",lb:"MAP"},
+  {id:"tl",lb:"TIMELINE"},{id:"mkt",lb:"MARKETS"},{id:"pred",lb:"FORECAST"},
+  {id:"spill",lb:"SPILLOVER"},{id:"src",lb:"SOURCES"},{id:"ai",lb:"AI"},{id:"aud",lb:"AUDIT"},
 ];
 
 export default function App() {
@@ -1563,11 +1563,11 @@ export default function App() {
       <div className="cm-tabs" style={{display:"flex",flexWrap:"wrap",borderBottom:`1px solid ${P.edg}`,padding:"0 10px",background:P.bg}}>
         {TABS.map(t=>(
           <button key={t.id} onClick={()=>setTab(t.id)} className="cm-tab-btn" style={{
-            display:"flex",alignItems:"center",gap:5,padding:"10px 13px",background:"transparent",
+            padding:"10px 11px",background:"transparent",
             border:"none",borderBottom:tab===t.id?`2px solid ${P.sun}`:"2px solid transparent",
             color:tab===t.id?P.sun:P.tx3,fontSize:11,fontWeight:700,cursor:"pointer",
             fontFamily:fn,letterSpacing:.8,whiteSpace:"nowrap",transition:"all .2s"}}>
-            <span style={{fontSize:11,opacity:.7}}>{t.ic}</span> {t.lb}
+            {t.lb}
           </button>))}
       </div>
       </div>{/* END STICKY */}
