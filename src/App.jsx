@@ -3,12 +3,70 @@ import { useState, useEffect, useRef } from "react";
 // ════════════════════════════════════════════
 // PALETTE & FONTS
 // ════════════════════════════════════════════
-const P = {
+const DARK = {
   bg:"#080C14",srf:"#0E1420",pnl:"#131B2B",edg:"#1B2540",edgL:"#283656",
   fire:"#F0544F",flm:"#F5853F",sun:"#E9C53A",leaf:"#30C77B",
   sky:"#4C9CF5",vio:"#9B6DF5",rose:"#E96DA0",aqua:"#34BFC9",sage:"#21AD99",
   tx:"#D8DEE9",tx2:"#8D99AE",tx3:"#5A6882",tx4:"#3D4D66",
 };
+const LIGHT = {
+  bg:"#F4F6F9",srf:"#FFFFFF",pnl:"#EDF0F5",edg:"#D0D7E2",edgL:"#B8C2D0",
+  fire:"#D93025",flm:"#E8710A",sun:"#C68A00",leaf:"#1A8F54",
+  sky:"#1A73E8",vio:"#7B3FD4",rose:"#C93B76",aqua:"#0D8F96",sage:"#0E7C6B",
+  tx:"#1A1D23",tx2:"#4A5568",tx3:"#718096",tx4:"#A0AEC0",
+};
+
+function useTheme() {
+  const [mode, setMode] = useState(() => {
+    try { return localStorage.getItem("cm-theme") || "night"; } catch { return "night"; }
+  });
+  const [systemDark, setSystemDark] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia?.("(prefers-color-scheme: dark)").matches
+  );
+  useEffect(() => {
+    const mq = window.matchMedia?.("(prefers-color-scheme: dark)");
+    if (!mq) return;
+    const handler = (e) => setSystemDark(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+  useEffect(() => {
+    try { localStorage.setItem("cm-theme", mode); } catch {}
+  }, [mode]);
+  const isDark = mode === "night" || (mode === "system" && systemDark);
+  return { mode, setMode, isDark, P: isDark ? DARK : LIGHT };
+}
+
+function ThemeToggle({ mode, setMode, P }) {
+  const opts = [
+    { id: "day", icon: "☀", label: "Day" },
+    { id: "night", icon: "☾", label: "Night" },
+    { id: "system", icon: "◐", label: "System" },
+  ];
+  return (
+    <div style={{ display: "flex", gap: 2, background: `${P.edg}60`, borderRadius: 6, padding: 2 }}>
+      {opts.map((o) => (
+        <button
+          key={o.id}
+          onClick={() => setMode(o.id)}
+          style={{
+            display: "flex", alignItems: "center", gap: 3,
+            padding: "3px 8px", border: "none", borderRadius: 4, cursor: "pointer",
+            background: mode === o.id ? P.srf : "transparent",
+            color: mode === o.id ? P.tx : P.tx3,
+            fontSize: 10, fontWeight: 700, fontFamily: "'IBM Plex Mono','Menlo',monospace",
+            boxShadow: mode === o.id ? `0 1px 3px ${P.bg}40` : "none",
+            transition: "all .2s",
+          }}
+        >
+          <span style={{ fontSize: 12 }}>{o.icon}</span> {o.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+let P = DARK; // default, overridden at render
 const fn="'IBM Plex Mono','Menlo',monospace";
 const fs="'DM Sans','Helvetica Neue',sans-serif";
 
@@ -1423,6 +1481,8 @@ const TABS=[
 
 export default function App() {
   const [tab,setTab]=useState("dash");
+  const { mode, setMode, isDark, P: TP } = useTheme();
+  P = TP; // update global P for all child components
 
   const headlines=[
     "LIVE: Direct US-Iran face-to-face talks underway in Islamabad. Vance + Kushner + Witkoff lead US team",
@@ -1452,10 +1512,11 @@ export default function App() {
         *{box-sizing:border-box;margin:0;padding:0}
         ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:${P.bg}}::-webkit-scrollbar-thumb{background:${P.edg};border-radius:3px}
         button{font-family:inherit}
+        body{background:${P.bg};transition:background .3s}
       `}</style>
 
       {/* HEADER */}
-      <div style={{background:"linear-gradient(135deg,#0C0610,#080C14 60%,#0A0E16)",borderBottom:`1px solid ${P.fire}15`,padding:"10px 13px"}}>
+      <div style={{background:isDark?"linear-gradient(135deg,#0C0610,#080C14 60%,#0A0E16)":`linear-gradient(135deg,#E8ECF2,#F4F6F9 60%,#EAEFF5)`,borderBottom:`1px solid ${P.fire}15`,padding:"10px 13px"}}>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
           <div style={{display:"flex",alignItems:"center",gap:10}}>
             <Blink color={P.fire} size={10}/>
@@ -1465,6 +1526,7 @@ export default function App() {
             </div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:10}}>
+            <ThemeToggle mode={mode} setMode={setMode} P={P}/>
             <Blink color={P.fire} size={6}/>
             <span style={{fontSize:11,color:P.fire,fontFamily:fn,fontWeight:700}}>DAY {(()=>{const now=new Date();const start=new Date(2026,1,28);now.setHours(0,0,0,0);start.setHours(0,0,0,0);return Math.round((now-start)/864e5)+1})()}</span>
             <div style={{textAlign:"right"}}><div style={{fontSize:11,color:P.tx3,fontFamily:fn}}>CLAUDE OPUS · 22 SOURCES</div><Clk/></div>
