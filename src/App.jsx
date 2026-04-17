@@ -426,17 +426,16 @@ function OverviewTab() {
           {label:"Israel",val:23,color:P.vio,display:"23"},
           {label:"US Military",val:15,color:P.sky,display:"15"},
         ]} maxVal={3500}/>
-        <MiniBarGroup title="DAILY STRIKE INTENSITY (EST.)" height={130} data={[
+        <MiniBarGroup title="STRIKE INTENSITY BY PERIOD (EST.)" height={130} data={[
           {label:"Feb 28",val:450,color:P.fire,display:"450+"},
-          {label:"Mar 1",val:380,color:P.fire,display:"380+"},
-          {label:"Mar 2",val:320,color:P.flm,display:"320+"},
-          {label:"Mar 3",val:280,color:P.flm,display:"280+"},
-          {label:"Mar 4",val:250,color:P.sun,display:"250+"},
-          {label:"Mar 5",val:200,color:P.sun,display:"200+"},
-          {label:"Mar 6",val:180,color:P.sun,display:"180+"},
-          {label:"Mar 7-8",val:300,color:P.fire,display:"300+"},
-          {label:"Mar 9-10",val:250,color:P.flm,display:"250+"},
-          {label:"Mar 11-12",val:280,color:P.fire,display:"280+"},
+          {label:"Mar 1-2",val:350,color:P.fire,display:"350+"},
+          {label:"Mar 3-5",val:240,color:P.flm,display:"240+"},
+          {label:"Mar 6-8",val:300,color:P.fire,display:"300+"},
+          {label:"Mar 9-12",val:270,color:P.flm,display:"270+"},
+          {label:"Mar 13-20",val:200,color:P.sun,display:"200+"},
+          {label:"Mar 21-31",val:180,color:P.sun,display:"180+"},
+          {label:"Apr 1-7",val:220,color:P.flm,display:"220+"},
+          {label:"Apr 8+",val:30,color:P.leaf,display:"CF"},
         ]}/>
       </div>
     </div>
@@ -949,20 +948,22 @@ function TimelineTab() {
         {[["all","ALL",P.tx2],...Object.entries(eLbl).map(([k,lb])=>[k,lb,eClr[k]])].map(([id,lb,cl])=>(
           <button key={id} onClick={()=>setFilt(id)} style={{background:filt===id?`${cl}18`:"transparent",border:`1px solid ${filt===id?cl:P.edg}`,borderRadius:5,padding:"3px 10px",fontSize:11,fontWeight:700,color:filt===id?cl:P.tx3,cursor:"pointer",fontFamily:fn}}>{lb}</button>))}
       </div>
-      <MiniBarGroup title="EVENTS BY DAY" height={80} data={[
+      <MiniBarGroup title="EVENTS BY DAY / WEEK" height={80} data={[
         {label:"Feb 28",val:8,color:P.fire,display:"8"},
         {label:"Mar 1",val:4,color:P.flm,display:"4"},
         {label:"Mar 2",val:4,color:P.flm,display:"4"},
-        {label:"Mar 3",val:3,color:P.sun,display:"3"},
-        {label:"Mar 4",val:3,color:P.sun,display:"3"},
-        {label:"Mar 5",val:4,color:P.sun,display:"4"},
-        {label:"Mar 6",val:14,color:P.flm,display:"14"},
-        {label:"Mar 7",val:14,color:P.flm,display:"14"},
-        {label:"Mar 8",val:12,color:P.fire,display:"12+"},
-        {label:"Mar 9",val:10,color:P.fire,display:"10+"},
-        {label:"Mar 10",val:12,color:P.fire,display:"12+"},
-        {label:"Mar 11",val:14,color:P.flm,display:"14"},
-        {label:"Mar 12",val:12,color:P.fire,display:"12+"},
+        {label:"Mar 3-5",val:10,color:P.sun,display:"10"},
+        {label:"Mar 6-7",val:28,color:P.fire,display:"28"},
+        {label:"Mar 8-9",val:22,color:P.fire,display:"22"},
+        {label:"Mar 10-12",val:38,color:P.flm,display:"38"},
+        {label:"Mar 13",val:18,color:P.fire,display:"18"},
+        {label:"Wk 3-4",val:12,color:P.sun,display:"12"},
+        {label:"Wk 5-6",val:10,color:P.sun,display:"10"},
+        {label:"Apr 7-8",val:19,color:P.leaf,display:"19"},
+        {label:"Apr 9-11",val:15,color:P.leaf,display:"15"},
+        {label:"Apr 12",val:15,color:P.fire,display:"15"},
+        {label:"Apr 13-16",val:8,color:P.sun,display:"8"},
+        {label:"Apr 17",val:9,color:P.leaf,display:"9"},
       ]}/>
       <div style={{maxHeight:500,overflowY:"auto"}}>
         {data.map((ev,i)=>(
