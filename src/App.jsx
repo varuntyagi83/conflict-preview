@@ -994,28 +994,28 @@ function TimelineTab() {
 // ════════════════════════════════════════════
 function MarketsTab() {
   const stocks=[
-    {sym:"LMT",name:"Lockheed Martin",change:"+18%",direction:1,sector:"Defense",note:"F-35, THAAD, PAC-3. All-time high"},
-    {sym:"NOC",name:"Northrop Grumman",change:"+13%",direction:1,sector:"Defense",note:"B-2 Spirit bomber maker"},
-    {sym:"RTX",name:"RTX (Raytheon)",change:"+7%",direction:1,sector:"Defense",note:"Tomahawk, Patriot demand surge"},
-    {sym:"XOM",name:"ExxonMobil",change:"+15%",direction:1,sector:"Energy",note:"Benefits from $100 Brent"},
-    {sym:"CVX",name:"Chevron",change:"+14%",direction:1,sector:"Energy",note:"Energy sector leading gains"},
-    {sym:"GLD",name:"Gold SPDR",change:"+3%",direction:1,sector:"Haven",note:"~$5,177/oz haven demand"},
-    {sym:"MS",name:"Morgan Stanley",change:"-4%",direction:-1,sector:"Finance",note:"Capped private credit withdrawals"},
-    {sym:"DAL",name:"Delta Airlines",change:"-8%",direction:-1,sector:"Airlines",note:"Fuel + ME airspace closure"},
-    {sym:"UAL",name:"United Airlines",change:"-9%",direction:-1,sector:"Airlines",note:"Worst S&P performer"},
-    {sym:"KOSPI",name:"Korea Comp.",change:"-15%",direction:-1,sector:"Intl",note:"Multiple circuit breakers since war"},
+    {sym:"LMT",name:"Lockheed Martin",change:"+25%",direction:1,sector:"Defense",note:"ATH. F-35, THAAD, PAC-3 demand. Op Sledgehammer potential"},
+    {sym:"NOC",name:"Northrop Grumman",change:"+20%",direction:1,sector:"Defense",note:"B-2 Spirit, munitions. Structural winner"},
+    {sym:"RTX",name:"RTX (Raytheon)",change:"+15%",direction:1,sector:"Defense",note:"Tomahawk + Patriot backlog surging"},
+    {sym:"XOM",name:"ExxonMobil",change:"+22%",direction:1,sector:"Energy",note:"US exports +3.5M bpd. $100 Brent"},
+    {sym:"CVX",name:"Chevron",change:"+20%",direction:1,sector:"Energy",note:"Energy security = structural demand"},
+    {sym:"CSCO",name:"Cisco",change:"+8%",direction:1,sector:"Tech",note:"Led Dow back to 50K on May 14"},
+    {sym:"HAL",name:"Halliburton",change:"+18%",direction:1,sector:"OilSvc",note:"CEO: 'rebuild inventories above historical levels'"},
+    {sym:"DAL",name:"Delta Airlines",change:"-14%",direction:-1,sector:"Airlines",note:"Jet fuel crisis. ME airspace closed. Reroutes"},
+    {sym:"UAL",name:"United Airlines",change:"-16%",direction:-1,sector:"Airlines",note:"Worst S&P performer since war began"},
+    {sym:"KOSPI",name:"Korea Comp.",change:"-18%",direction:-1,sector:"Intl",note:"Asia worst-hit. Fuel shortages. CSIS: SK worst non-combatant"},
   ];
   const up = "▲";
   const dn = "▼";
   return (
     <div>
       <div className="cm-kpi-row" style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:14}}>
-        <KPI label="Brent Crude" value="~$92" accent={P.leaf} sub={`${dn} -16% ceasefire crash. Biggest drop in 6 yrs`}/>
-        <KPI label="WTI Crude" value="~$93" accent={P.leaf} sub={`${dn} -17%. Was $110+ before deal`}/>
-        <KPI label="Gold" value="~$4,804" accent={P.sun} sub={`${dn} Haven bid fading post-ceasefire`}/>
-        <KPI label="Dow Jones" value="+1,300" accent={P.leaf} sub={`${up} Surging Wed. Biggest rally of 2026`}/>
-        <KPI label="S&P 500" value="+2.5%" accent={P.leaf} sub={`${up} Still -5.5% from ATH. Cautious`}/>
-        <KPI label="10Y Treasury" value="4.25%" accent={P.leaf} sub={`${dn} -9bps on ceasefire. Rate cut odds rising`}/>
+        <KPI label="Brent Crude" value="~$100" accent={P.fire} sub={`${up} Hit $114 early May. IEA: 10M bpd lost`}/>
+        <KPI label="WTI Crude" value="~$95" accent={P.fire} sub={`${up} ~$10 above pre-war. 1B barrels lost`}/>
+        <KPI label="Dow Jones" value="50,000" accent={P.leaf} sub={`${up} Back to 50K. Cisco-led rally`}/>
+        <KPI label="S&P 500" value="~7,100" accent={P.sun} sub={`Near ATH. CNBC: 'misplaced euphoria'`}/>
+        <KPI label="US Gas" value="$4.52/gal" accent={P.fire} sub={`${up} +52% since war. May suspend gas tax`}/>
+        <KPI label="Oil Floor" value="$80-90" accent={P.flm} sub={`Analysts: new structural floor. $70s gone`}/>
       </div>
       <div style={{overflowX:"auto",marginBottom:14}}>
         <table style={{width:"100%",borderCollapse:"collapse"}}>
@@ -1032,55 +1032,55 @@ function MarketsTab() {
             </tr>))}</tbody>
         </table>
       </div>
-      <CandlestickChart title="BRENT CRUDE OIL — DAILY CANDLES ($/bbl)" data={[
+      <CandlestickChart title="BRENT CRUDE OIL — KEY DATES ($/bbl)" data={[
         {label:"Feb 26",open:70,high:71,low:69,close:70},
-        {label:"Feb 27",open:70,high:73,low:70,close:73},
         {label:"Feb 28",open:73,high:82,low:72,close:78},
-        {label:"Mar 1",open:78,high:81,low:76,close:80},
-        {label:"Mar 2",open:80,high:83,low:78,close:79},
         {label:"Mar 3",open:79,high:84,low:78,close:82},
-        {label:"Mar 4",open:82,high:85,low:80,close:83},
-        {label:"Mar 5",open:83,high:86,low:81,close:85},
         {label:"Mar 6",open:85,high:90,low:84,close:90},
-        {label:"Mar 7",open:83,high:95,low:83,close:93},
-        {label:"Mar 8",open:93,high:100,low:90,close:98},
         {label:"Mar 9",open:98,high:120,low:96,close:113},
         {label:"Mar 10",open:113,high:113,low:88,close:90},
-        {label:"Mar 11",open:90,high:93,low:87,close:92},
-        {label:"Mar 12",open:92,high:102,low:93,close:100},
         {label:"Mar 13",open:100,high:102,low:99,close:101},
+        {label:"Apr 7",open:108,high:110,low:92,close:93},
+        {label:"Apr 12",open:93,high:105,low:92,close:103},
+        {label:"Apr 17",open:103,high:103,low:87,close:89},
+        {label:"Apr 18",open:89,high:96,low:88,close:95},
+        {label:"May 1",open:95,high:100,low:93,close:98},
+        {label:"May 5",open:98,high:114,low:97,close:108},
+        {label:"May 9",open:106,high:108,low:98,close:100},
+        {label:"May 15",open:100,high:103,low:97,close:100},
       ]}/>
-      <StockCandles title="STOCK PERFORMANCE — CANDLESTICK VIEW (% change since Feb 27)" data={[
-        {sym:"LMT",open:2,close:14.9,high:16,low:1,color:P.leaf},
-        {sym:"NOC",open:1.5,close:10.9,high:12,low:0.5,color:P.leaf},
-        {sym:"XOM",open:1,close:11,high:12.5,low:0,color:P.flm},
-        {sym:"RTX",open:0.5,close:4.7,high:6,low:-0.5,color:P.leaf},
-        {sym:"PLTR",open:0,close:6,high:7.5,low:-1,color:P.sky},
-        {sym:"GLD",open:0.5,close:5,high:6,low:0,color:P.sun},
-        {sym:"DAL",open:0,close:-5.2,high:1,low:-7,color:P.fire},
-        {sym:"UAL",open:0,close:-5.5,high:0.5,low:-8,color:P.fire},
-        {sym:"KOSPI",open:0,close:-12,high:0,low:-14,color:P.fire},
+      <StockCandles title="STOCK PERFORMANCE — SINCE FEB 27 (% change as of May 15)" data={[
+        {sym:"LMT",open:2,close:25,high:28,low:1,color:P.leaf},
+        {sym:"XOM",open:1,close:22,high:25,low:0,color:P.flm},
+        {sym:"NOC",open:1.5,close:20,high:22,low:0.5,color:P.leaf},
+        {sym:"CVX",open:1,close:20,high:23,low:0,color:P.flm},
+        {sym:"HAL",open:0,close:18,high:22,low:-2,color:P.leaf},
+        {sym:"RTX",open:0.5,close:15,high:18,low:-0.5,color:P.leaf},
+        {sym:"CSCO",open:0,close:8,high:10,low:-3,color:P.sky},
+        {sym:"DAL",open:0,close:-14,high:1,low:-18,color:P.fire},
+        {sym:"UAL",open:0,close:-16,high:0.5,low:-20,color:P.fire},
+        {sym:"KOSPI",open:0,close:-18,high:0,low:-22,color:P.fire},
       ]}/>
       <div className="cm-grid2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-        <MiniBarGroup title="DEFENSE & ENERGY GAINS" height={130} data={[
-          {label:"LMT",val:14.9,color:P.leaf,display:"+14.9%"},
-          {label:"NOC",val:10.9,color:P.leaf,display:"+10.9%"},
-          {label:"XOM",val:11,color:P.flm,display:"+11%"},
-          {label:"RTX",val:4.7,color:P.leaf,display:"+4.7%"},
-          {label:"PLTR",val:6,color:P.sky,display:"+6%"},
-          {label:"CVX",val:11,color:P.flm,display:"+11%"},
+        <MiniBarGroup title="DEFENSE & ENERGY GAINS (since Feb 27)" height={130} data={[
+          {label:"LMT",val:25,color:P.leaf,display:"+25%"},
+          {label:"XOM",val:22,color:P.flm,display:"+22%"},
+          {label:"NOC",val:20,color:P.leaf,display:"+20%"},
+          {label:"CVX",val:20,color:P.flm,display:"+20%"},
+          {label:"HAL",val:18,color:P.leaf,display:"+18%"},
+          {label:"RTX",val:15,color:P.leaf,display:"+15%"},
         ]}/>
-        <MiniBarGroup title="BIGGEST LOSERS" height={130} data={[
-          {label:"UAL",val:5.5,color:P.fire,display:"-5.5%"},
-          {label:"DAL",val:5.2,color:P.fire,display:"-5.2%"},
-          {label:"KOSPI",val:12,color:P.fire,display:"-12%"},
-          {label:"Nikkei",val:2,color:P.flm,display:"-2%"},
-          {label:"Stoxx",val:1.6,color:P.flm,display:"-1.6%"},
+        <MiniBarGroup title="BIGGEST LOSERS (since Feb 27)" height={130} data={[
+          {label:"KOSPI",val:18,color:P.fire,display:"-18%"},
+          {label:"UAL",val:16,color:P.fire,display:"-16%"},
+          {label:"DAL",val:14,color:P.fire,display:"-14%"},
+          {label:"NFLX",val:10,color:P.fire,display:"-10%"},
+          {label:"Asia Air",val:12,color:P.flm,display:"-12%"},
         ]}/>
       </div>
       <div style={{border:`1px solid ${P.edg}`,borderRadius:10,padding:14,background:P.srf,marginTop:12}}>
         <div style={{fontSize:11,color:P.tx3,fontWeight:700,letterSpacing:1.5,marginBottom:10,fontFamily:fn}}>ANALYST VIEWS</div>
-        {[["Goldman Sachs","$78 oil = ~4 week bet. Beyond that = triple-digit oil",P.sun],["Morgan Stanley","Defense + aerospace = structural beneficiaries",P.sky],["Oxford Economics","Sell spikes — won't last >2 months. Buy GCC dip",P.leaf],["Dan Niles","$100+ sustained = recession. Expects ~1 month",P.flm]].map(([src,v,cl],i)=>(
+        {[["Goldman Sachs","$80-90 new oil floor. Hormuz closed another month = $100+ all 2026. Q3: $120",P.sun],["Vitol CEO (Russell Hardy)","1 billion barrels lost. 600-700M bbl current shortage. Growing daily",P.fire],["CNBC / Amrita Sen","'Misplaced euphoria.' $80-90 floor. Food prices next crisis — urea/LNG/fertilizer",P.flm],["Oil CEOs (SLB/Baker/Halliburton)","'Fundamental structural change' to energy. Rebuild inventories above historical. Energy security priority",P.sky],["IEA","10M bpd lost — largest supply disruption ever. US exports +3.5M bpd helping plug gap",P.leaf]].map(([src,v,cl],i)=>(
           <div key={i} style={{padding:"10px 13px",borderLeft:`3px solid ${cl}`,marginBottom:5,background:`${cl}06`,borderRadius:"0 8px 8px 0"}}>
             <div style={{fontSize:11,fontWeight:700,color:cl,fontFamily:fn}}>{src}</div>
             <div style={{fontSize:11,color:P.tx,marginTop:2,lineHeight:1.45}}>{v}</div>
@@ -1095,12 +1095,12 @@ function MarketsTab() {
 // ════════════════════════════════════════════
 function ForecastTab() {
   const preds=[
-    {q:"When could this end?",a:"Goldman: ~4 weeks. Oxford: max 2 months. Trump: 'no time limits.' Most likely: intense 2-3 wks, then off-ramp via Oman/Qatar.",cn:65,src:"Goldman, Oxford, Kpler"},
-    {q:"Will oil hit $100?",a:"Only if Hormuz closed >4 wks AND Gulf infrastructure damaged. Buffers exist. Short war peaks ~$85-90.",cn:55,src:"Goldman, Rystad Energy"},
-    {q:"Recession risk?",a:"Sustained $100+ oil = probable. Current levels manageable. US production buffers. Asia most exposed.",cn:30,src:"CNBC, Morgan Stanley"},
-    {q:"Iran's next leader?",a:"Mojtaba Khamenei frontrunner. Assembly bombed mid-meeting. Israel: 'any successor is a target.' Trump wants role in selection.",cn:70,src:"NPR, Reuters, AP"},
-    {q:"Ground invasion?",a:"FM Araghchi: 'ready.' But US has air supremacy, no ground deployed. Pentagon focused on air+naval. Low probability.",cn:20,src:"NBC, CENTCOM"},
-    {q:"Defense stocks?",a:"Rally continues. LMT +14.9%, ITA +14% YTD. White House meeting with defense CEOs. Paradox: neutralized Iran = less demand.",cn:80,src:"Capital Alpha, CNBC"},
+    {q:"When does this end?",a:"Op Epic Fury ended May 5 but Hormuz crisis persists. Trump says ceasefire on 'life support.' No deal in sight. Dual blockade could last months.",cn:30,src:"Britannica, CNN, Al Jazeera"},
+    {q:"Will oil stay above $100?",a:"IEA: 10M bpd lost. Vitol: 1B barrels gone. Analysts: $80-90 new floor. Triple-digit likely if Hormuz stays disrupted through summer.",cn:75,src:"Goldman, IEA, Vitol, CNBC"},
+    {q:"Recession risk?",a:"Gas $4.52. CPI 3.3%. Retail sales slowing. CNBC: 'misplaced euphoria.' Asia fuel shortages. Food prices next. Real risk rising.",cn:55,src:"CNBC, EIA, Bloomberg"},
+    {q:"Will Hormuz fully reopen?",a:"Partially open during Lebanon ceasefire, then closed again. Iran lost track of some mines. Project Freedom: only 2 US ships crossed. IMO: 20K sailors stranded.",cn:25,src:"Wikipedia, Al Jazeera, IMO"},
+    {q:"Op Sledgehammer?",a:"Pentagon planning if ceasefire collapses. NBC reported May 13. Waltz: 'giving diplomacy every chance.' But Trump 'totally unacceptable' on Iran's terms.",cn:35,src:"NBC, CNN, ABC"},
+    {q:"Energy system change?",a:"Oil CEOs unanimous: 'fundamental structural change.' Rebuild inventories. US becomes critical exporter. Trump-Xi agreed. $80-90 permanent floor.",cn:90,src:"SLB, Baker Hughes, Halliburton, Exxon, CNBC"},
   ];
   return (
     <div>
