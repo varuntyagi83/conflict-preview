@@ -122,21 +122,21 @@ const locClr={at:P.fire,nu:P.sun,ir:P.vio,ch:P.flm,lb:P.rose};
 const locLbl={at:"US/Israel Airstrike",nu:"Nuclear Target",ir:"Iranian Retaliation",ch:"Strategic Chokepoint",lb:"Lebanon Front"};
 
 const BASE_SCENARIOS = [
-  {nm:"Ceasefires Hold → Deal",p:35,oil:"$75-85",mkt:"Rally continues, ATH territory",end:"Lebanon + Iran ceasefires extended. Hormuz stays open. Peace talks resume",cl:P.leaf},
-  {nm:"Partial Deal / Frozen",p:30,oil:"$85-100",mkt:"Grinding uncertainty",end:"Hormuz open but US blockade stays. No nuclear deal. Extended ceasefires",cl:P.sun},
-  {nm:"War Resumes",p:25,oil:"$110-150",mkt:"Sharp reversal, recession risk",end:"Lebanon ceasefire expires. Iran re-closes Hormuz. Strikes restart",cl:P.fire},
-  {nm:"Full Escalation",p:10,oil:">$150",mkt:"Global recession",end:"Blockade escalation + Houthi + Lebanon collapse. Oil supply crisis",cl:P.vio},
+  {nm:"Hormuz Reopens → Deal",p:25,oil:"$75-85",mkt:"Rally, recovery begins",end:"Project Freedom works. Iran accepts modified deal. Gradual normalization",cl:P.leaf},
+  {nm:"Frozen Conflict",p:35,oil:"$90-110",mkt:"New normal. $80-90 oil floor",end:"Ceasefire holds indefinitely. Hormuz partially open. No deal. Dual blockade persists",cl:P.sun},
+  {nm:"War Resumes (Sledgehammer)",p:25,oil:"$120-150",mkt:"Sharp crash, recession",end:"Ceasefire collapses. Pentagon activates Op Sledgehammer. Full strikes resume",cl:P.fire},
+  {nm:"Global Energy Crisis",p:15,oil:">$150",mkt:"Stagflation, food crisis",end:"Hormuz stays shut months. Food prices spike (urea/LNG). Asia fuel shortages spread",cl:P.vio},
 ];
 
 const BASE_SPILLS = [
-  {r:"Lebanon Ceasefire",lv:"HIGH",p:60,st:"ACTIVE",d:"10-day truce started Apr 16. 2,196 killed, 7,061 wounded, 1M+ displaced. First direct Israel-Lebanon talks in decades. Hezbollah conditional acceptance",cl:P.leaf},
-  {r:"Strait of Hormuz",lv:"HIGH",p:50,st:"OPENING",d:"Iran declared 'COMPLETELY OPEN' during Lebanon truce. But US blockade of Iranian ports REMAINS. Maersk/Hapag cautious — risk assessments pending",cl:P.sun},
-  {r:"US Naval Blockade",lv:"CRITICAL",p:90,st:"ACTIVE",d:"13 tankers intercepted. Blockade of Iranian ports remains 'in full force' per Trump. Even with Hormuz open",cl:P.fire},
-  {r:"Paris Hormuz Summit",lv:"MODERATE",p:40,st:"ACTIVE",d:"49 countries. UK+France leading 'strictly peaceful' naval escort + mine clearance mission. Planning meeting in London next week",cl:P.sky},
-  {r:"Iran-US Peace Talks",lv:"CRITICAL",p:70,st:"STALLED",d:"Islamabad talks collapsed Apr 12 after 21 hours. Nuclear issue the sticking point. No next round scheduled",cl:P.fire},
-  {r:"Houthis / Yemen",lv:"HIGH",p:75,st:"ACTIVE",d:"In the war. Shipping attacks continue. Bab al-Mandab threatened",cl:P.flm},
-  {r:"Iraq Militias",lv:"HIGH",p:80,st:"ACTIVE",d:"85+ PMF killed. US Embassy attacks. Drone strikes continue despite ceasefire",cl:P.flm},
-  {r:"Global Economy",lv:"HIGH",p:60,st:"IMPROVING",d:"Oil crashed to $89. S&P 500 NEW ATH at 7,100+. Gas still $4.14. But temporary — Hormuz open only during Lebanon truce",cl:P.sun},
+  {r:"Strait of Hormuz",lv:"CRITICAL",p:95,st:"DISRUPTED",d:"Ship seized + sunk May 15. 20K seafarers stranded on 2,000 vessels. IEA: 10M bpd lost — largest ever. US fired on Iranian tankers. Dual blockade",cl:P.fire},
+  {r:"US Naval Blockade",lv:"CRITICAL",p:90,st:"ACTIVE",d:"Blockade of Iranian ports since Apr 13. 13 tankers intercepted. Project Freedom: 2 US ships crossed. Iran counter-blockades Gulf",cl:P.fire},
+  {r:"Iran Peace Talks",lv:"CRITICAL",p:80,st:"STALLED",d:"Islamabad collapsed Apr 12. Iran counter-proposal 'totally unacceptable.' Waltz: 'giving diplomacy every chance.' Op Sledgehammer on standby",cl:P.fire},
+  {r:"Lebanon Ceasefire",lv:"HIGH",p:65,st:"FRAGILE",d:"2,167+ killed. Violations by both sides. IDF 5 divisions in south Lebanon. Hezbollah: 22 attacks Sat. Israel: 22 killed yesterday",cl:P.flm},
+  {r:"Gulf State Attacks",lv:"HIGH",p:75,st:"RESUMING",d:"UAE attacked by Iranian drones after month of calm. Kuwait: IRGC infiltrated Bubiyan Island — 4 captured. Saudi secret strikes revealed",cl:P.flm},
+  {r:"Global Fuel Crisis",lv:"CRITICAL",p:95,st:"ACTIVE",d:"Gas $4.52 (+52%). Fuel shortages: Philippines emergency, Myanmar alternate-day driving, Thailand diesel +69%. Asia worst hit. Food prices next",cl:P.fire},
+  {r:"Energy System Shift",lv:"HIGH",p:90,st:"STRUCTURAL",d:"Oil CEOs: 'fundamental structural change.' US exports surged 3.5M bpd. Trump-Xi: agreed Hormuz must open. $80-90 new floor per analysts",cl:P.sun},
+  {r:"Netanyahu vs Trump",lv:"MODERATE",p:50,st:"EMERGING",d:"Netanyahu: 'time to wean off US military aid, reduce $3.8B to zero.' Wants independence from US. Potential rift",cl:P.sun},
 ];
 
 const BIASES = [
@@ -392,24 +392,24 @@ function OverviewTab() {
   return (
     <div>
       <div className="cm-kpi-row" style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:12}}>
-        <KPI label="War Day" value={day} accent={P.flm} sub="Since Feb 28. HORMUZ OPEN. Lebanon ceasefire"/>
-        <KPI label="Iran Killed" value="9,226" accent={P.fire} sub="6,174 military + 3,052 civilian. 26,500+ injured" trend="up" trendBad/>
-        <KPI label="Israel" value="40 killed" accent={P.vio} sub="27 civilians. 7,453 injured"/>
-        <KPI label="US Military" value="13 KIA" accent={P.sky} sub="303 wounded. 1 health death in Kuwait"/>
-        <KPI label="Lebanon" value="2,196" accent={P.rose} sub="7,061 wounded. 1M+ displaced. 10-day ceasefire started" trend="up" trendBad/>
-        <KPI label="Gulf States" value="28+ killed" accent={P.sun} sub="Saudi capacity -600K bpd. 13 tankers intercepted by USN" trend="up" trendBad/>
+        <KPI label="War Day" value={day} accent={P.flm} sub="Since Feb 28. Op Epic Fury ended May 5. Hormuz STILL disrupted"/>
+        <KPI label="Iran Killed" value="6,620+" accent={P.fire} sub="Military (Hengaw). 2,000+ civilian. 26,500+ injured" trend="up" trendBad/>
+        <KPI label="Israel" value="40 killed" accent={P.vio} sub="27 civilians. 7,453 injured. 418 military wounded"/>
+        <KPI label="US Military" value="13 KIA" accent={P.sky} sub="303 wounded. Pentagon: war cost $29B+"/>
+        <KPI label="Lebanon" value="2,167+" accent={P.rose} sub="7,061 wounded. 1M+ displaced. Ceasefire violations by both sides" trend="up" trendBad/>
+        <KPI label="Gulf States" value="28+ killed" accent={P.sun} sub="UAE drones resumed. Kuwait: IRGC infiltration. 20K sailors stranded" trend="up" trendBad/>
       </div>
       <div className="cm-kpi-row" style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:14}}>
-        <KPI label="Brent Oil" value="~$89" accent={P.leaf} sub="Crashed 12% on Hormuz opening. Was $103 yesterday" trend="down"/>
-        <KPI label="WTI Crude" value="~$83" accent={P.leaf} sub="Erasing nearly all war gains" trend="down"/>
-        <KPI label="S&P 500" value="7,100+" accent={P.leaf} sub="NEW ALL-TIME HIGH. +1.3% today" trend="up"/>
-        <KPI label="Dow Jones" value="+1,005" accent={P.leaf} sub="+2.1% today. Russell 2000 also ATH" trend="up"/>
-        <KPI label="Nasdaq" value="+1.5%" accent={P.leaf} sub="Tech rallying on oil relief" trend="up"/>
-        <KPI label="US Gas" value="$4.14/gal" accent={P.fire} sub="+39% since war. Should ease if Hormuz stays open" trend="up" trendBad/>
+        <KPI label="Brent Oil" value="~$100" accent={P.fire} sub="Hit $114 on Hormuz violence. IEA: 10M bpd lost" trend="up" trendBad/>
+        <KPI label="WTI Crude" value="~$95" accent={P.fire} sub="Vitol CEO: 1 billion barrels lost in war" trend="up" trendBad/>
+        <KPI label="Dow Jones" value="50,000" accent={P.leaf} sub="Back to 50K. Cisco led rally May 14" trend="up"/>
+        <KPI label="S&P 500" value="~7,100" accent={P.sun} sub="Near ATH but CNBC warns 'misplaced euphoria'" trend="up"/>
+        <KPI label="US Gas" value="$4.52/gal" accent={P.fire} sub="+52% since war. Energy Sec: may suspend gas tax" trend="up" trendBad/>
+        <KPI label="Hormuz" value="DISRUPTED" accent={P.fire} sub="Ship seized + sunk May 15. 20K seafarers, 2,000 vessels stuck"/>
       </div>
       <div className="cm-grid2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-        {[{t:"STATUS (DAY 48)",cl:P.leaf,items:["Iran-US ceasefire holds (expires ~Apr 22)","Israel-Lebanon 10-DAY CEASEFIRE started Apr 16","HORMUZ DECLARED OPEN for commercial vessels","But US BLOCKADE of Iranian ports REMAINS in force","Paris Summit: 49 countries. UK+France naval escort mission","S&P 500 hit ALL-TIME HIGH on Hormuz news"]},
-          {t:"KEY RISKS",cl:P.fire,items:["Hormuz open only during Lebanon ceasefire (~10 days)","US blockade on Iranian ports still active","Islamabad talks collapsed Apr 12. No peace deal","Iran military: 6,620 killed (Hengaw). 26,500 wounded","Shipping cos cautious — Maersk: 'risk assessments' needed","Goldman: $100+ Brent all 2026 if Hormuz closes again"]}
+        {[{t:"STATUS (DAY 77)",cl:P.sun,items:["Op Epic Fury ENDED May 5. Iran ceasefire holds — barely","US BLOCKADE of Iran ports continues. Fired on Iranian tankers","Project Freedom: Trump plan to 'guide' ships — 2 US ships crossed","Hormuz still disrupted. IEA: 10M bpd lost — largest ever","Trump-Xi met in Beijing: agreed Hormuz must open","Dual blockade: US blocks Iran, Iran blocks Gulf"]},
+          {t:"KEY RISKS",cl:P.fire,items:["Iran counter-proposal 'totally unacceptable' — Trump","Pentagon planning Op 'Sledgehammer' if ceasefire collapses","IRGC infiltrated Kuwait Bubiyan Island — 4 captured","UAE attacked again after month of calm. Drones from Iran","Saudi secret strikes on Iran revealed (late March)","$80-90 new oil floor. Food crisis next — urea/fertilizer/LNG"]}
         ].map((col,ci)=>(
           <div key={ci} style={{border:`1px solid ${col.cl}20`,borderRadius:10,padding:14,background:P.srf}}>
             <div style={{fontSize:11,color:col.cl,fontWeight:700,letterSpacing:1.2,fontFamily:fn,marginBottom:8}}>{col.t}</div>
@@ -933,6 +933,23 @@ const BASE_EVTS = [
   {d:"Apr 17",t:"12:00",e:"Iran war total casualties: 9,226 killed (6,174 military + 3,052 civilian). Iran military alone: 6,620 killed per Hengaw",g:"k",v:5},
   {d:"Apr 17",t:"13:00",e:"Trump: negotiations 'should go very quickly.' Iran ceasefire still technically active — expires ~Apr 22",g:"k",v:4},
   {d:"Apr 17",t:"Now",e:"DAY 48 — HORMUZ OPEN. Lebanon ceasefire. S&P ATH. Oil $89. But US blockade remains. Iran ceasefire expires Apr 22",g:"k",v:5},
+  {d:"Apr 18",t:"All Day",e:"Iran RE-CLOSES Hormuz after US blockade stays. Indian ships fired on. CMA CGM Everglade hit by rocket off Oman. Mein Schiff 4 threatened",g:"i",v:5},
+  {d:"Apr 22",t:"08:00",e:"Greek cargo ship Epaminondas attacked by Iranian gunboat despite having permission. Gunfire + RPGs damage bridge",g:"i",v:5},
+  {d:"Apr 22-30",t:"WEEK 8-9",e:"Ceasefire extended but tense. Dual blockade: US blocks Iran, Iran blocks Gulf. Ship attacks continue sporadically",g:"k",v:4},
+  {d:"May 1",t:"06:00",e:"Kuwait: 6 IRGC fighters attempted to infiltrate Bubiyan Island. 1 Kuwaiti soldier injured. 4 IRGC captured, 2 fled",g:"i",v:5},
+  {d:"May 5",t:"12:00",e:"OPERATION EPIC FURY officially ended. US offensive operations against Iran concluded. Ceasefire/blockade continues",g:"k",v:5},
+  {d:"May 5",t:"14:00",e:"US destroyed 6 Iranian small boats after they attacked commercial vessels in Hormuz. Oil +6% to $114. UAE attacked again",g:"a",v:5},
+  {d:"May 5",t:"16:00",e:"Trump announces 'Project Freedom' — US Navy to 'guide' commercial vessels through Hormuz. 2 US ships cross",g:"k",v:5},
+  {d:"May 9",t:"10:00",e:"Oil CEOs on earnings: 'fundamental structural change' to energy system. 1 billion barrels lost per Vitol. $80-90 new floor",g:"k",v:5},
+  {d:"May 10",t:"08:00",e:"Iran counter-proposal: compensation + Hormuz sovereignty. Trump: 'TOTALLY UNACCEPTABLE.' Waltz: giving diplomacy every chance",g:"k",v:5},
+  {d:"May 11",t:"06:00",e:"Day 74: Tehran says ready for 'aggression.' Trump says ceasefire on 'life support.' Pentagon planning Op 'Sledgehammer'",g:"k",v:5},
+  {d:"May 12",t:"10:00",e:"Kuwait accuses Iran of Bubiyan Island infiltration. UAE reports new drone attacks after month of calm",g:"i",v:4},
+  {d:"May 13",t:"08:00",e:"NBC: Pentagon considering calling war 'Sledgehammer' if ceasefire collapses. Saudi secret strikes on Iran revealed",g:"k",v:5},
+  {d:"May 14",t:"12:00",e:"Dow back to 50,000. Cisco-led rally. Retail sales slowed — gas eating consumer spending. BRICS FM meet in India",g:"k",v:4},
+  {d:"May 15",t:"06:00",e:"Hormuz: ship SEIZED + another SUNK. Stock markets worldwide drop. Oil ~$100. 20K seafarers stranded on 2,000 vessels",g:"k",v:5},
+  {d:"May 15",t:"08:00",e:"Trump-Xi met in Beijing. Agreed Hormuz must open. US exports surged 3.5M bpd to plug gap. Wright: 'natural energy trade' with China",g:"k",v:5},
+  {d:"May 15",t:"10:00",e:"Pentagon official: war has cost at least $29 billion. Gas $4.52/gal (+52%). Energy Sec may suspend federal gas tax",g:"k",v:5},
+  {d:"May 15",t:"Now",e:"DAY 77 — Epic Fury ended. Ceasefire on 'life support.' Hormuz still disrupted. $29B+ cost. Oil $100. Gas $4.52. Op Sledgehammer on standby",g:"k",v:5},
 ];
 const eClr={a:P.sky,i:P.fire,d:P.leaf,k:P.sun};
 const eLbl={a:"US/Israel",i:"Iran",d:"Defense",k:"Develop."};
@@ -950,20 +967,15 @@ function TimelineTab() {
       </div>
       <MiniBarGroup title="EVENTS BY DAY / WEEK" height={80} data={[
         {label:"Feb 28",val:8,color:P.fire,display:"8"},
-        {label:"Mar 1",val:4,color:P.flm,display:"4"},
-        {label:"Mar 2",val:4,color:P.flm,display:"4"},
-        {label:"Mar 3-5",val:10,color:P.sun,display:"10"},
-        {label:"Mar 6-7",val:28,color:P.fire,display:"28"},
-        {label:"Mar 8-9",val:22,color:P.fire,display:"22"},
-        {label:"Mar 10-12",val:38,color:P.flm,display:"38"},
-        {label:"Mar 13",val:18,color:P.fire,display:"18"},
-        {label:"Wk 3-4",val:12,color:P.sun,display:"12"},
-        {label:"Wk 5-6",val:10,color:P.sun,display:"10"},
-        {label:"Apr 7-8",val:19,color:P.leaf,display:"19"},
-        {label:"Apr 9-11",val:15,color:P.leaf,display:"15"},
-        {label:"Apr 12",val:15,color:P.fire,display:"15"},
-        {label:"Apr 13-16",val:8,color:P.sun,display:"8"},
-        {label:"Apr 17",val:9,color:P.leaf,display:"9"},
+        {label:"Mar 1-5",val:18,color:P.flm,display:"18"},
+        {label:"Mar 6-9",val:50,color:P.fire,display:"50"},
+        {label:"Mar 10-13",val:56,color:P.fire,display:"56"},
+        {label:"Wk 3-5",val:22,color:P.sun,display:"22"},
+        {label:"Apr 7-12",val:34,color:P.leaf,display:"34"},
+        {label:"Apr 13-17",val:17,color:P.sun,display:"17"},
+        {label:"Apr 18-30",val:10,color:P.flm,display:"10"},
+        {label:"May 1-5",val:12,color:P.fire,display:"12"},
+        {label:"May 6-15",val:16,color:P.sun,display:"16"},
       ]}/>
       <div style={{maxHeight:500,overflowY:"auto"}}>
         {data.map((ev,i)=>(
@@ -1188,7 +1200,7 @@ function SourcesTab() {
       <div style={{marginTop:14,border:`1px solid ${P.edg}`,borderRadius:10,padding:14,background:P.srf}}>
         <div style={{fontSize:10,color:P.tx3,fontWeight:700,letterSpacing:1.5,fontFamily:fn,marginBottom:8}}>METHODOLOGY NOTE</div>
         <div style={{fontSize:11,color:P.tx2,lineHeight:1.6}}>
-          This dashboard was built by <b style={{color:P.tx}}>Claude Opus</b> (Anthropic) using real-time web search across the sources listed above. Data is manually refreshed — not auto-updating. Casualty figures use Iranian Red Crescent numbers as baseline but are flagged as requiring independent verification. Market data is sourced from Bloomberg, Yahoo Finance, and CNBC. War cost calculations are anchored to the CSIS report published March 6, 2026, with the $891.4M/day burn rate confirmed by CNN, NBC, and Washington Times. Baseline data last updated <b style={{color:P.tx}}>April 17, 2026</b>.
+          This dashboard was built by <b style={{color:P.tx}}>Claude Opus</b> (Anthropic) using real-time web search across the sources listed above. Data is manually refreshed — not auto-updating. Casualty figures use Iranian Red Crescent numbers as baseline but are flagged as requiring independent verification. Market data is sourced from Bloomberg, Yahoo Finance, and CNBC. War cost calculations are anchored to the CSIS report published March 6, 2026, with the $891.4M/day burn rate confirmed by CNN, NBC, and Washington Times. Baseline data last updated <b style={{color:P.tx}}>May 15, 2026</b>.
         </div>
       </div>
     </div>
@@ -1244,7 +1256,7 @@ function AITab() {
       <div style={{border:`1px solid ${P.edg}`,borderRadius:10,padding:14,background:P.srf}}>
         <div style={{fontSize:10,color:P.tx3,fontWeight:700,letterSpacing:1.5,fontFamily:fn,marginBottom:8}}>REFRESH BEHAVIOR</div>
         <div style={{fontSize:11,color:P.tx2,lineHeight:1.5}}>
-          When you click <b style={{color:P.sky}}>REFRESH LIVE</b>, the artifact calls Claude Sonnet via the Anthropic API. Strategy 1 uses web search for real-time data. Strategy 2 falls back to Sonnet's training knowledge. If both fail, the hardcoded baseline (compiled by Claude Opus from 22 sources) is displayed. Baseline data was last updated <b style={{color:P.tx}}>April 17, 2026</b>.
+          When you click <b style={{color:P.sky}}>REFRESH LIVE</b>, the artifact calls Claude Sonnet via the Anthropic API. Strategy 1 uses web search for real-time data. Strategy 2 falls back to Sonnet's training knowledge. If both fail, the hardcoded baseline (compiled by Claude Opus from 22 sources) is displayed. Baseline data was last updated <b style={{color:P.tx}}>May 15, 2026</b>.
         </div>
       </div>
     </div>
@@ -1513,24 +1525,24 @@ export default function App() {
   P = TP; // update global P for all child components
 
   const headlines=[
-    "BREAKING: Iran declares Strait of Hormuz 'COMPLETELY OPEN' for commercial vessels during Lebanon ceasefire",
-    "S&P 500 crosses 7,100 — NEW ALL-TIME HIGH. Dow +1,005 pts. Russell 2000 ATH. Markets euphoric",
-    "Oil CRASHES: Brent -12% to $89. WTI to $83. Erasing nearly all war gains since Feb 28",
-    "BUT: Trump says US BLOCKADE of Iranian ports remains 'in full force' until peace deal signed",
-    "Israel-Lebanon 10-day ceasefire started. 2,196 killed, 7,061 wounded, 1M+ displaced in Lebanon war",
-    "Paris Summit: 49 countries. UK + France leading naval escort + mine clearance mission for Hormuz shipping",
-    "Iran war total: 9,226 killed (6,174 military + 3,052 civilian). 26,500+ injured across all factions",
-    "Iran military losses: 6,620 killed per Hengaw. IDF estimated 3,000-4,000 soldiers killed by Mar 13",
-    "US: 13 KIA, 303 wounded. Israel: 40 killed, 7,453 injured. Iraq PMF: 85+ killed",
-    "Maersk cautious: 'transit decision based on risk assessments.' Hapag-Lloyd: 'open questions remain'",
-    "13 oil tankers intercepted by US Navy to enforce Iran blockade — all complied without boarding",
-    "Islamabad talks collapsed Apr 12. Nuclear issue the sticking point. No next round scheduled",
-    "Trump: Iran deal negotiations 'should go very quickly.' Ceasefire expires ~April 22",
-    "Iran FM Araghchi: Hormuz open during Lebanon truce. Ships must use 'coordinated route'",
-    "Lebanon: first direct Israel-Lebanon talks in decades. Hezbollah conditional acceptance of truce",
-    "UN Sec-Gen Guterres: Hormuz reopening 'a step in the right direction.' Hopes for continued dialogue",
-    "Macron warns against 'toll system' or privatization of Hormuz. London planning meeting next week",
-    "Gas $4.14/gal but should ease if Hormuz stays open. EIA had forecast $4.30 peak in April",
+    "BREAKING: Ship SEIZED + another SUNK near Strait of Hormuz today. Stock markets drop worldwide",
+    "Pentagon: Iran war has cost at least $29 BILLION. Gas $4.52/gal — up 52% since war began",
+    "IEA: 10 MILLION barrels/day lost from Gulf — 'largest supply disruption in history of global oil market'",
+    "Trump-Xi meet in Beijing: agreed Hormuz must open. US exports surged 3.5M bpd to plug gap",
+    "Op Epic Fury officially ENDED May 5. But ceasefire on 'life support' — Trump. Op Sledgehammer on standby",
+    "US FIRED on Iranian oil tankers trying to circumvent blockade. Brent spiked to $114 on Hormuz violence",
+    "Vitol CEO: 1 BILLION barrels of oil lost in war. Oil execs: 'fundamental structural change' to energy system",
+    "Dual blockade: US blocks Iran ports, Iran blocks Gulf. 20,000 seafarers stranded on 2,000 vessels",
+    "Iran counter-proposal 'TOTALLY UNACCEPTABLE' — Trump. Demands compensation + Hormuz sovereignty",
+    "IRGC infiltrated Kuwait's Bubiyan Island — 4 captured. UAE attacked by drones after month of calm",
+    "Saudi Arabia launched SECRET STRIKES against Iran in late March — Reuters, WSJ",
+    "Lebanon: 2,167+ killed. Ceasefire violations by both sides. Hezbollah: 22 attacks Saturday",
+    "Project Freedom: Trump's plan to guide ships through Hormuz. Only 2 US ships crossed so far",
+    "CNBC: '$80-90 is the new oil floor.' Food crisis next — urea/LNG/fertilizer disrupted through Hormuz",
+    "Netanyahu: 'time to wean off US military aid, reduce $3.8B to zero.' Wants independence from Washington",
+    "Philippines declared emergency. Myanmar: alternate-day driving. Thailand diesel +69%. Asia fuel crisis",
+    "Energy Sec Wright: may suspend federal gas tax. Trump in Beijing: China will buy more US oil",
+    "Dow back to 50,000 but CNBC warns of 'misplaced euphoria' — recession risk from oil shock still real",
   ];
 
   return (
@@ -1577,7 +1589,7 @@ export default function App() {
             <Blink color={P.fire} size={10}/>
             <div>
               <span className="cm-title" style={{fontSize:25,fontWeight:800,color:P.fire,letterSpacing:4,fontFamily:fn}}>CONFLICT MONITOR</span>
-              <span className="cm-subtitle" style={{fontSize:11,color:P.tx3,marginLeft:12,fontFamily:fn}}>EPIC FURY · HORMUZ OPEN · LEBANON CEASEFIRE · US BLOCKADE REMAINS</span>
+              <span className="cm-subtitle" style={{fontSize:11,color:P.tx3,marginLeft:12,fontFamily:fn}}>EPIC FURY ENDED MAY 5 · HORMUZ CRISIS · DUAL BLOCKADE · CEASEFIRE ON 'LIFE SUPPORT'</span>
             </div>
           </div>
           <div className="cm-header-right" style={{display:"flex",alignItems:"center",gap:10}}>
