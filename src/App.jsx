@@ -122,21 +122,21 @@ const locClr={at:P.fire,nu:P.sun,ir:P.vio,ch:P.flm,lb:P.rose};
 const locLbl={at:"US/Israel Airstrike",nu:"Nuclear Target",ir:"Iranian Retaliation",ch:"Strategic Chokepoint",lb:"Lebanon Front"};
 
 const BASE_SCENARIOS = [
-  {nm:"Escalation → Infrastructure War",p:35,oil:"$100-130",mkt:"Sharp sell-off, recession",end:"Trump strikes Iran infrastructure. Rezaei launches 'full-scale offensive.' Hormuz fully shut",cl:P.fire},
-  {nm:"Forever War (Attrition)",p:30,oil:"$85-100",mkt:"Grinding, oil elevated",end:"Tit-for-tat strikes continue. No deal. Expert warns 'forever war.' $80-90 floor",cl:P.sun},
-  {nm:"Diplomatic Off-ramp",p:20,oil:"$75-85",mkt:"Relief rally, recovery",end:"Back-channel deal. Limited strikes pause. Hormuz partially reopens",cl:P.leaf},
-  {nm:"Full Regional War",p:15,oil:">$130",mkt:"Global recession, oil crisis",end:"Iran full offensive + Houthi Bab el-Mandeb closure + Gulf infrastructure attacks",cl:P.vio},
+  {nm:"'No Good Options' Grind",p:40,oil:"$85-100",mkt:"Elevated oil, grinding uncertainty",end:"Tit-for-tat continues. No deal. CNN: 'phrase no good options has become a cliche.' Forever war",cl:P.sun},
+  {nm:"Infrastructure War",p:25,oil:"$100-130",mkt:"Sharp sell-off, recession",end:"Trump hits Iran infrastructure next week. Iran retaliates on Gulf infrastructure. Houthis close Bab el-Mandeb",cl:P.fire},
+  {nm:"New Deal Attempt",p:20,oil:"$75-85",mkt:"Relief rally",end:"Back-channel via Oman/Pakistan. Modified MOU. Hormuz gradually reopens",cl:P.leaf},
+  {nm:"Israel Joins War",p:15,oil:">$120",mkt:"Black swan crash",end:"Netanyahu-Trump decide Israel enters directly. Multi-front escalation. Regional war",cl:P.vio},
 ];
 
 const BASE_SPILLS = [
-  {r:"US Strikes (9 nights)",lv:"CRITICAL",p:99,st:"ACTIVE",d:"9 consecutive nights of strikes. Hit oil tanker near main export terminal. Trump warns infrastructure next. CENTCOM: 'dozens of military targets' nightly",cl:P.fire},
-  {r:"Iran Retaliation",lv:"CRITICAL",p:95,st:"ESCALATING",d:"Struck US bases across 6 countries. Kuwait desalination plant hit. Missiles at Jordan/Aqaba. Rezaei: 'full-scale offensive' in 2-3 days. IRGC targeting al-Tanf",cl:P.fire},
-  {r:"Strait of Hormuz",lv:"CRITICAL",p:99,st:"CLOSED",d:"IRGC: 'completely closed.' US reimposed blockade Jul 15. Traffic near zero. Indian seafarer killed. Houthis ordered to close Bab el-Mandeb if infra hit",cl:P.fire},
-  {r:"Lebanon / Hezbollah",lv:"HIGH",p:75,st:"FRAGILE",d:"2,167+ killed. Israel-Lebanon talks in DC. IDF to withdraw from 2 areas. But Hezbollah: 22 attacks Sat. Israel: 22 killed yesterday",cl:P.flm},
-  {r:"Gulf States Under Fire",lv:"CRITICAL",p:95,st:"ACTIVE",d:"Iran struck Kuwait power + desalination. Bahrain, Jordan, Kuwait, Oman, Qatar all hit. State Dept worldwide caution issued",cl:P.fire},
-  {r:"'Forever War' Risk",lv:"CRITICAL",p:80,st:"WARNING",d:"ICG expert: 'It took 2 months to negotiate MoU, only 3 weeks for it to unravel.' Risk of indefinite tit-for-tat conflict",cl:P.vio},
-  {r:"Global Markets",lv:"HIGH",p:70,st:"STRESSED",d:"S&P -1.6% last week. Nasdaq -2.9%. SMH (chips) -9% in 3 weeks. Oil $90. Gas $3.99. But Dow still at 52K. Markets pricing limited escalation",cl:P.sun},
-  {r:"Houthi Escalation",lv:"HIGH",p:80,st:"THREATENED",d:"Iran ordered Houthis to close Bab el-Mandeb if US hits power infrastructure. Would shut Saudi Red Sea oil exports",cl:P.fire},
+  {r:"US-Iran Strikes (resumed)",lv:"CRITICAL",p:99,st:"ACTIVE",d:"US retaliatory strikes Jul 29-30. Trump: 'beat the f**king sh*t out of them.' Warns infrastructure next week. MOU signed Jun 19 — collapsed Jul",cl:P.fire},
+  {r:"Iran Retaliation",lv:"CRITICAL",p:95,st:"ESCALATING",d:"'Surprise' BM attack on US bases Jul 28 — all intercepted. IRGC claims 3 F-35s destroyed at al-Azraq. Struck 6 countries. Kuwait desalination hit",cl:P.fire},
+  {r:"Strait of Hormuz",lv:"CRITICAL",p:95,st:"DISRUPTED",d:"~32 vessels/day (vs 100+ prewar). Ghalibaf: can't export 'single barrel.' IEP: $2.2T/yr GDP loss. 20K seafarers stranded",cl:P.fire},
+  {r:"Lebanon",lv:"CRITICAL",p:90,st:"ACTIVE",d:"4,322+ killed, 12,210 wounded. IDF still in south Lebanon. Deadliest day Jun 18: 4 IDF soldiers + 18 Lebanese killed. Crossed 4,000 dead in June",cl:P.fire},
+  {r:"Israel May Join",lv:"HIGH",p:60,st:"EMERGING",d:"Netanyahu visiting Trump. Senior lawmaker: 'Israel may enter war.' Katz: 'respond without conditions.' IDF chief: 'prepared'",cl:P.vio},
+  {r:"Gulf States Under Fire",lv:"CRITICAL",p:95,st:"ACTIVE",d:"Kuwait: power + desalination hit. Navy vessel struck Jul 14. Qatar condemned attacks. Jordan: missiles at Aqaba. 3 Indian sailors killed Jun 10",cl:P.fire},
+  {r:"War Costs",lv:"CRITICAL",p:99,st:"MOUNTING",d:"Hegseth: $37.5B (Jul 24). CSIS: $40B. WarCosts: $113B total. IEP: $2.2T/yr global GDP impact. 168 children killed in Minab school — 'war crime'",cl:P.fire},
+  {r:"Global Economy",lv:"HIGH",p:80,st:"STRESSED",d:"Oil $87. Gas $3.99. S&P -1.6% wk. Chips -9%. Dow futures -330. Markets pricing limited escalation — but risks are asymmetric",cl:P.sun},
 ];
 
 const BIASES = [
@@ -392,24 +392,24 @@ function OverviewTab() {
   return (
     <div>
       <div className="cm-kpi-row" style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:12}}>
-        <KPI label="War Day" value={day} accent={P.fire} sub="Since Feb 28. WAR RESUMED. 9 nights of US strikes"/>
-        <KPI label="Iran (new phase)" value="50+ killed" accent={P.fire} sub="Since Jun 27 restart. 500+ wounded. Total war: 6,620+ military killed" trend="up" trendBad/>
-        <KPI label="Israel" value="40 killed" accent={P.vio} sub="Katz: 'will respond without conditions.' IDF 5 divisions in Lebanon"/>
-        <KPI label="US Military" value="13 KIA" accent={P.sky} sub="303 wounded. $29B+ cost. Al-Tanf targeted by IRGC"/>
-        <KPI label="Lebanon" value="2,167+" accent={P.rose} sub="Israel-Lebanon talks in DC. IDF to withdraw from 2 areas" trend="up" trendBad/>
-        <KPI label="Gulf States" value="UNDER ATTACK" accent={P.fire} sub="Iran struck Kuwait desalination plant. Bahrain, Jordan, Qatar, Oman hit" trend="up" trendBad/>
+        <KPI label="War Day" value={day} accent={P.fire} sub="Since Feb 28. MOU collapsed. Strikes resumed. 'No good options'"/>
+        <KPI label="Total Killed" value="7,144-9,676+" accent={P.fire} sub="All fronts. 46,965 injured. IEP: $2.2T/yr global GDP loss" trend="up" trendBad/>
+        <KPI label="Iran" value="3,468-6,000+" accent={P.fire} sub="Foundation of Martyrs vs US/Israel est. 15K-26.5K injured"/>
+        <KPI label="US Military" value="20+ KIA" accent={P.sky} sub="Pentagon restored 4 deaths. ~700+ wounded. $37.5B spent"/>
+        <KPI label="Lebanon" value="4,322+" accent={P.rose} sub="12,210 wounded. Crossed 4,000 in June. IDF still in south" trend="up" trendBad/>
+        <KPI label="Israel" value="57 killed" accent={P.vio} sub="8,966 injured. Netanyahu visiting Trump — Israel may join war"/>
       </div>
       <div className="cm-kpi-row" style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:14}}>
-        <KPI label="Brent Oil" value="~$90" accent={P.fire} sub="+3% today. Rose from $70 low to $90 on war resumption" trend="up" trendBad/>
-        <KPI label="WTI Crude" value="~$84" accent={P.fire} sub="+3%. Hit $82.49 Fri — highest in a month" trend="up" trendBad/>
-        <KPI label="Dow Jones" value="52,554" accent={P.leaf} sub="-0.9% last week. Futures flat tonight" trend="down" trendBad/>
-        <KPI label="S&P 500" value="7,534" accent={P.leaf} sub="-1.6% last week. Chip stocks hammered (SMH -9%)" trend="down" trendBad/>
-        <KPI label="US Gas" value="$3.99/gal" accent={P.flm} sub="+34% since war began. Below $4 but rising again" trend="up" trendBad/>
-        <KPI label="Hormuz" value="CLOSED AGAIN" accent={P.fire} sub="IRGC: 'completely closed.' US reimposed blockade Jul 15"/>
+        <KPI label="Brent Oil" value="~$87" accent={P.fire} sub="Surged 6% on Trump 'beating' threat. Was $91 Sunday" trend="up" trendBad/>
+        <KPI label="WTI Crude" value="~$84" accent={P.fire} sub="+6.4% Wed. Hormuz traffic at ~32/day (vs 100+ normal)" trend="up" trendBad/>
+        <KPI label="S&P 500" value="7,458" accent={P.sun} sub="-1.6% last week. Chip rout: SMH -9% in 3 weeks"/>
+        <KPI label="Dow Jones" value="52,118" accent={P.sun} sub="Futures -330 pts Wed on Iran threats"/>
+        <KPI label="US Gas" value="$3.99/gal" accent={P.flm} sub="+34% since war. Below $4 but volatile"/>
+        <KPI label="War Cost" value="$37.5B+" accent={P.fire} sub="Hegseth Jul 24. CSIS: $40B. WarCosts: $113B total"/>
       </div>
       <div className="cm-grid2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-        {[{t:"WAR RESUMED (DAY 142)",cl:P.fire,items:["9 CONSECUTIVE NIGHTS of US strikes on Iran","CENTCOM: 'precision munitions hitting dozens of military targets'","US hit oil tanker near Iran's main export terminal — first time","Trump: Iran hit 'very hard.' Warned infrastructure strikes next week","US reimposed naval blockade of Iranian ports Jul 15","IRGC declared Hormuz 'completely closed' again"]},
-          {t:"IRAN RETALIATION",cl:P.fire,items:["Struck US bases in Bahrain, Jordan, Kuwait, Oman, Qatar, Syria","Kuwait: power + water desalination plant attacked","Missiles at Aqaba, Jordan — 3 intercepted, 1 hit remote area","IRGC claims hit on al-Tanf (US departed Feb but claim made)","Rezaei: 'full-scale offensive' if strikes continue 2-3 more days","Indian seafarer killed in ship attack. Hormuz traffic near zero"]}
+        {[{t:"STATUS (DAY 153)",cl:P.fire,items:["MOU signed Jun 19 — COLLAPSED early July","US retaliatory strikes Jul 29-30 after Iran 'surprise' attack","Trump: 'beat the f**king sh*t out of them'","Warns INFRASTRUCTURE strikes next week unless breakthrough","Mutual pause Jul 25-27, then Iran attacked US bases","CNN: war 'in desperate need of new thinking.' No good options"]},
+          {t:"IRAN RETALIATION",cl:P.fire,items:["IRGC: destroyed 3 F-35s at al-Azraq, Jordan (unverified)","Struck US bases across Bahrain, Jordan, Kuwait, Oman, Qatar, Syria","Kuwait power + water desalination plant attacked","Hormuz: ~32 vessels/day (vs 100+ prewar). Traffic collapsing","600+ attacks on US between Feb-Apr per CENTCOM","Pezeshkian: 'stand firm against the enemy'"]}
         ].map((col,ci)=>(
           <div key={ci} style={{border:`1px solid ${col.cl}20`,borderRadius:10,padding:14,background:P.srf}}>
             <div style={{fontSize:11,color:col.cl,fontWeight:700,letterSpacing:1.2,fontFamily:fn,marginBottom:8}}>{col.t}</div>
@@ -970,7 +970,22 @@ const BASE_EVTS = [
   {d:"Jul 19",t:"10:00",e:"Israel: 'will respond and strike back without any dependence or conditions' if Iran attacks. IDF chief: 'prepared'",g:"k",v:5},
   {d:"Jul 19",t:"14:00",e:"Iran ordered Houthis to CLOSE BAB EL-MANDEB STRAIT if US hits Iran power infrastructure. Would shut Saudi exports",g:"k",v:5},
   {d:"Jul 19",t:"18:00",e:"Brent +3% to ~$91. WTI +3% to ~$85. S&P -1.6% last week. Nasdaq -2.9%. SMH (chips) -9% in 3 weeks",g:"k",v:4},
-  {d:"Jul 20",t:"Now",e:"DAY 142 — WAR RESUMED. 9 nights of strikes. Hormuz CLOSED. Rezaei: 'full-scale offensive.' Houthi Bab el-Mandeb threat. 'Forever war' risk",g:"k",v:5},
+  {d:"Jul 20",t:"24:00",e:"DAY 142 — WAR RESUMED. 9 nights of strikes. Hormuz CLOSED. Rezaei: 'full-scale offensive.' Houthi Bab el-Mandeb threat",g:"k",v:5},
+  {d:"Jul 21-24",t:"WK 21",e:"Tit-for-tat continues. Oil volatile $80-90. Hegseth: war has cost $37.5 billion. 20+ US KIA confirmed (4 deaths restored)",g:"k",v:5},
+  {d:"Jul 25-27",t:"PAUSE",e:"MUTUAL PAUSE — no US strikes for 2+ consecutive nights. Oil drops from $100 to $89. Hope for diplomatic restart",g:"k",v:5},
+  {d:"Jul 28",t:"08:00",e:"Iran launches 'SURPRISE' ballistic missile attack on US forces in Middle East — all intercepted by CENTCOM",g:"i",v:5},
+  {d:"Jul 28",t:"12:00",e:"Trump: 'It's our turn. They know it's coming.' Vows to 'hit them very hard' in response",g:"k",v:5},
+  {d:"Jul 29",t:"06:00",e:"Trump tells Fox: 'We are going to beat the f**king sh*t out of them.' Warns Iran 'going to get a beating'",g:"k",v:5},
+  {d:"Jul 29",t:"10:00",e:"Oil surges: Brent +5.8% to $87, WTI +6.4% to $84. Dow futures -330 pts on escalation",g:"k",v:5},
+  {d:"Jul 29",t:"18:00",e:"US launches RETALIATORY STRIKES on Iran. CENTCOM: completed fresh wave of strikes against IRGC targets",g:"a",v:5},
+  {d:"Jul 29",t:"20:00",e:"Pezeshkian urges Iranians to 'stand firm' against 'enemy.' IRGC claims destroyed 3 F-35s at al-Azraq Jordan",g:"k",v:5},
+  {d:"Jul 30",t:"02:00",e:"US completes retaliatory strikes. Iran struck US targets in Bahrain, Jordan, Kuwait, Oman, Qatar, Syria",g:"a",v:5},
+  {d:"Jul 30",t:"06:00",e:"Iran renewed attacks on Jordan + Kuwait. Qatar 'strongly condemns' violation of sovereignty",g:"i",v:5},
+  {d:"Jul 30",t:"08:00",e:"IRGC: BM strike destroyed 3 F-35s, damaged 3 more at Jordan's al-Azraq base. 'Officers + maintenance killed' (unverified)",g:"i",v:5},
+  {d:"Jul 30",t:"10:00",e:"Senior Iranian lawmaker: Israel may JOIN WAR. Netanyahu visiting Trump 'to make a decision on this'",g:"k",v:5},
+  {d:"Jul 30",t:"12:00",e:"CNN: war 'in desperate need of new thinking.' 'No good options' has become a cliche. Diplomacy + force both failing",g:"k",v:5},
+  {d:"Jul 30",t:"14:00",e:"No US strikes for 2nd straight night. Unclear if tactical pause or diplomatic opening. Brent at $87",g:"k",v:4},
+  {d:"Jul 30",t:"Now",e:"DAY 153 — MOU collapsed. Strikes resumed then paused. 7,144-9,676 killed total. $37.5B spent. Hormuz disrupted. 'No good options'",g:"k",v:5},
 ];
 const eClr={a:P.sky,i:P.fire,d:P.leaf,k:P.sun};
 const eLbl={a:"US/Israel",i:"Iran",d:"Defense",k:"Develop."};
@@ -992,10 +1007,10 @@ function TimelineTab() {
         {label:"Mar 6-13",val:106,color:P.fire,display:"106"},
         {label:"Wk 3-5",val:22,color:P.sun,display:"22"},
         {label:"Apr 7-17",val:51,color:P.leaf,display:"51"},
-        {label:"Apr 18-May 15",val:30,color:P.sun,display:"30"},
-        {label:"May-Jun",val:10,color:P.leaf,display:"CF"},
-        {label:"Jun 27-Jul 11",val:8,color:P.flm,display:"8"},
+        {label:"Apr 18-May",val:30,color:P.sun,display:"30"},
+        {label:"Jun (MOU)",val:15,color:P.leaf,display:"MOU"},
         {label:"Jul 11-20",val:22,color:P.fire,display:"22"},
+        {label:"Jul 21-30",val:16,color:P.fire,display:"16"},
       ]}/>
       <div style={{maxHeight:500,overflowY:"auto"}}>
         {data.map((ev,i)=>(
@@ -1030,12 +1045,12 @@ function MarketsTab() {
   return (
     <div>
       <div className="cm-kpi-row" style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:14}}>
-        <KPI label="Brent Crude" value="~$90" accent={P.fire} sub={`${up} +3% today. Rose from $70 on war restart`}/>
-        <KPI label="WTI Crude" value="~$84" accent={P.fire} sub={`${up} +3%. Hit $82.49 Fri — month high`}/>
-        <KPI label="Dow Jones" value="52,554" accent={P.sun} sub={`${dn} -0.9% last week. Futures flat`}/>
-        <KPI label="S&P 500" value="7,534" accent={P.sun} sub={`${dn} -1.6% last week. Chip rout`}/>
+        <KPI label="Brent Crude" value="~$87" accent={P.fire} sub={`${up} +5.8% Wed on Trump threats. Was $91 Sun`}/>
+        <KPI label="WTI Crude" value="~$84" accent={P.fire} sub={`${up} +6.4% Wed. Hormuz ~32 vessels/day`}/>
+        <KPI label="Dow Jones" value="52,118" accent={P.sun} sub={`${dn} Futures -330 Wed. -0.9% last wk`}/>
+        <KPI label="S&P 500" value="7,458" accent={P.sun} sub={`${dn} -1.6% last wk. Chips -9%`}/>
         <KPI label="US Gas" value="$3.99/gal" accent={P.flm} sub={`${up} +34% since war. Below $4 but rising`}/>
-        <KPI label="Gold" value="~$4,005" accent={P.sun} sub={`${dn} Haven bid weak despite war`}/>
+        <KPI label="Gold" value="~$4,005" accent={P.sun} sub={`Flat. Haven demand muted despite war`}/>
       </div>
       <div style={{overflowX:"auto",marginBottom:14}}>
         <table style={{width:"100%",borderCollapse:"collapse"}}>
@@ -1115,12 +1130,12 @@ function MarketsTab() {
 // ════════════════════════════════════════════
 function ForecastTab() {
   const preds=[
-    {q:"Is this a 'forever war'?",a:"ICG expert warns yes. MoU took 2 months to negotiate, unraveled in 3 weeks. 9 nights of strikes with no end. Waltz: 'giving diplomacy every chance' but Trump acting.",cn:70,src:"ICG, CNN, CNBC"},
-    {q:"Will Rezaei launch full offensive?",a:"Warned 'full-scale offensive' in 2-3 days if strikes continue. This is Day 9. Most credible escalation threat since Feb. Iran has struck 6 countries already.",cn:45,src:"CNN, IRIB, Tasnim"},
-    {q:"Hormuz — when does it reopen?",a:"IRGC declared it 'completely closed' again Jul 12. US reimposed blockade Jul 15. No talks. Iran ordered Houthis to close Bab el-Mandeb too if infra hit.",cn:15,src:"CNN, Al Jazeera, Wikipedia"},
-    {q:"Will Trump hit infrastructure?",a:"Explicitly warned next week unless diplomatic breakthrough. Bridge in Bandar Khamir already destroyed. Hit oil tanker near main export terminal. Escalation ladder rising.",cn:55,src:"CNN, TradingEconomics"},
-    {q:"Oil to $100+ again?",a:"Brent at $90, up from $70 low. If Rezaei's full offensive materializes or Houthis close Bab el-Mandeb, $100+ is inevitable. Markets still pricing limited escalation.",cn:50,src:"CNBC, Investing.com, Barchart"},
-    {q:"Markets — bull or bear?",a:"S&P at 7,534, Dow 52,554 — near ATH despite war. But -1.6% last week. Chips -9%. Analyst: 'investors don't think Trump will deploy troops.' Diplomatic resolution priced in.",cn:55,src:"CNBC, Vital Knowledge"},
+    {q:"Is there any path to peace?",a:"MOU signed Jun 19 collapsed in 3 weeks. ICG: 'forever war' risk. CNN: 'no good options.' Trump can't blast Tehran back to talks, but diplomacy also failed.",cn:20,src:"CNN, ICG, WarCosts"},
+    {q:"Will Israel join the war?",a:"Netanyahu visiting Trump. Senior lawmaker: decision imminent. Katz: 'respond without conditions.' IDF chief: 'prepared.' This would transform the conflict entirely.",cn:35,src:"Iran Intl, CNN"},
+    {q:"What has it cost?",a:"Hegseth: $37.5B (Jul 24). CSIS: $40B direct military. WarCosts: $113B total. IEP: $2.2T/yr global GDP. 168 children killed in single school strike.",cn:95,src:"NBC, CSIS, WarCosts, IEP, Time"},
+    {q:"Will Trump hit infrastructure?",a:"Explicitly warned 'next week' unless breakthrough. Already destroyed bridge in Bandar Khamir. Hit oil tanker. But Iran ordered Houthis to close Bab el-Mandeb in response.",cn:50,src:"CNN, Al Jazeera"},
+    {q:"How many have died?",a:"7,144-9,676 killed across all fronts. 46,965 injured. Iran: 3,468-6,000+. Lebanon: 4,322+. Israel: 57. US: 20+. Iraq: 119+. Plus Gulf states, seafarers, French.",cn:90,src:"Wikipedia, IranWarLive, militaryspend"},
+    {q:"Oil outlook?",a:"Brent $87, volatile $70-100 range. Hormuz at ~32/day (vs 100+). Markets pricing limited escalation but risks are asymmetric — any major escalation = $100+ instantly.",cn:60,src:"CNBC, TradingEcon, Investing.com"},
   ];
   return (
     <div>
@@ -1220,7 +1235,7 @@ function SourcesTab() {
       <div style={{marginTop:14,border:`1px solid ${P.edg}`,borderRadius:10,padding:14,background:P.srf}}>
         <div style={{fontSize:10,color:P.tx3,fontWeight:700,letterSpacing:1.5,fontFamily:fn,marginBottom:8}}>METHODOLOGY NOTE</div>
         <div style={{fontSize:11,color:P.tx2,lineHeight:1.6}}>
-          This dashboard was built by <b style={{color:P.tx}}>Claude Opus</b> (Anthropic) using real-time web search across the sources listed above. Data is manually refreshed — not auto-updating. Casualty figures use Iranian Red Crescent numbers as baseline but are flagged as requiring independent verification. Market data is sourced from Bloomberg, Yahoo Finance, and CNBC. War cost calculations are anchored to the CSIS report published March 6, 2026, with the $891.4M/day burn rate confirmed by CNN, NBC, and Washington Times. Baseline data last updated <b style={{color:P.tx}}>July 20, 2026</b>.
+          This dashboard was built by <b style={{color:P.tx}}>Claude Opus</b> (Anthropic) using real-time web search across the sources listed above. Data is manually refreshed — not auto-updating. Casualty figures use Iranian Red Crescent numbers as baseline but are flagged as requiring independent verification. Market data is sourced from Bloomberg, Yahoo Finance, and CNBC. War cost calculations are anchored to the CSIS report published March 6, 2026, with the $891.4M/day burn rate confirmed by CNN, NBC, and Washington Times. Baseline data last updated <b style={{color:P.tx}}>July 30, 2026</b>.
         </div>
       </div>
     </div>
@@ -1276,7 +1291,7 @@ function AITab() {
       <div style={{border:`1px solid ${P.edg}`,borderRadius:10,padding:14,background:P.srf}}>
         <div style={{fontSize:10,color:P.tx3,fontWeight:700,letterSpacing:1.5,fontFamily:fn,marginBottom:8}}>REFRESH BEHAVIOR</div>
         <div style={{fontSize:11,color:P.tx2,lineHeight:1.5}}>
-          When you click <b style={{color:P.sky}}>REFRESH LIVE</b>, the artifact calls Claude Sonnet via the Anthropic API. Strategy 1 uses web search for real-time data. Strategy 2 falls back to Sonnet's training knowledge. If both fail, the hardcoded baseline (compiled by Claude Opus from 22 sources) is displayed. Baseline data was last updated <b style={{color:P.tx}}>July 20, 2026</b>.
+          When you click <b style={{color:P.sky}}>REFRESH LIVE</b>, the artifact calls Claude Sonnet via the Anthropic API. Strategy 1 uses web search for real-time data. Strategy 2 falls back to Sonnet's training knowledge. If both fail, the hardcoded baseline (compiled by Claude Opus from 22 sources) is displayed. Baseline data was last updated <b style={{color:P.tx}}>July 30, 2026</b>.
         </div>
       </div>
     </div>
@@ -1545,24 +1560,24 @@ export default function App() {
   P = TP; // update global P for all child components
 
   const headlines=[
-    "WAR RESUMED: 9 consecutive nights of US strikes on Iran. Trump: hit 'VERY HARD.' Explosions across Iran",
-    "Rezaei warns: 'FULL-SCALE OFFENSIVE' if US strikes continue 2-3 more days. Highest-level threat since Feb",
-    "IRGC declares Hormuz 'COMPLETELY CLOSED' again. US reimposed naval blockade July 15. Traffic near zero",
-    "Iran struck US bases across 6 COUNTRIES: Bahrain, Jordan, Kuwait, Oman, Qatar, Syria in retaliation",
-    "Kuwait: Iran attacked POWER + WATER DESALINATION PLANT. Humanitarian escalation",
-    "Iran ordered Houthis to close Bab el-Mandeb if US hits power infrastructure — would shut Saudi Red Sea exports",
-    "US hit oil tanker near Iran's MAIN EXPORT TERMINAL — first time since reimposing blockade",
-    "Trump warns: INFRASTRUCTURE STRIKES next week unless diplomatic breakthrough. Bridge in Bandar Khamir destroyed",
-    "ICG expert: US and Iran risk entering a 'FOREVER WAR.' MoU took 2 months — unraveled in 3 weeks",
-    "Iran missiles at Aqaba, Jordan — 3 intercepted, 1 hit remote area. Came close to Israeli territory",
-    "Israel: 'will respond without any dependence or conditions' if Iran attacks. IDF chief: 'prepared'",
-    "S&P 500 -1.6% last week. Nasdaq -2.9%. Chip stocks hammered: SMH -9% in 3 weeks",
-    "Brent +3% to ~$91. WTI +3% to ~$85. Oil rose from $70 low back to $90 on war resumption",
-    "Gas $3.99/gal — below $4 but rising again. +34% since war began. Gas tax suspension considered",
-    "50 killed in Iran since June 27. 500+ wounded. 5 women + 2 children among dead. Executions surge",
-    "State Dept issues WORLDWIDE CAUTION. Americans advised to 'exercise increased caution'",
-    "Indian seafarer confirmed dead after ship attack in Hormuz. 20K seafarers still stranded",
-    "Dow 52,554 but futures flat. Markets pricing 'limited escalation' — but Rezaei threatening full offensive",
+    "CNN: Iran war 'IN DESPERATE NEED OF NEW THINKING.' 'No good options' has become a cliche. Both diplomacy and force failing",
+    "Trump: 'We are going to beat the f**king sh*t out of them.' US completed retaliatory strikes on IRGC targets Jul 29-30",
+    "Iran 'SURPRISE' ballistic missile attack on US forces intercepted. Trump: 'our turn.' Vows Iran 'going to get a beating'",
+    "IRGC claims DESTROYED 3 F-35 jets + damaged 3 more at Jordan's al-Azraq base. CNN cannot verify",
+    "Iran attacked US bases across 6 COUNTRIES: Bahrain, Jordan, Kuwait, Oman, Qatar, Syria. Kuwait desalination plant hit",
+    "Total death toll: 7,144-9,676 killed across all fronts. 46,965 injured. IEP: war costs $2.2 TRILLION/yr in global GDP",
+    "US KIA revised to 20+. Pentagon restored 4 deaths, disclosed 140+ additional wounded. Total ~700+ wounded",
+    "Hegseth: war has cost $37.5 BILLION (Jul 24). CSIS: $40B. WarCosts tracker: $113B total impact",
+    "Lebanon: 4,322+ killed. Crossed 4,000 in June. Deadliest day Jun 18: 4 IDF soldiers + 18 Lebanese killed",
+    "Netanyahu visiting Trump — senior lawmaker: 'Israel may JOIN WAR against Iran.' Decision imminent",
+    "MOU signed June 19 in Switzerland — 14-point deal — then COLLAPSED in early July. Both sides resumed strikes",
+    "Hormuz traffic at ~32 vessels/day (vs 100+ prewar). Ghalibaf: Iran can't export 'a single barrel' of oil",
+    "No US strikes for 2nd straight night Jul 30. Unclear if tactical pause or diplomatic opening",
+    "Brent +5.8% to $87. WTI +6.4% to $84. Dow futures -330 pts. S&P -1.6% last week. Chips -9%",
+    "600+ attacks on US forces between Feb-Apr per CENTCOM. War now in 5th month with no end in sight",
+    "Minab school strike killed 168 CHILDREN — Rep. Ansari: 'war crime' and 'national shame.' Investigation stalled",
+    "Iran executions surge: 47 political prisoners this year. 2 publicly hanged in Isfahan for Jan uprising",
+    "Gas $3.99/gal (+34%). Markets pricing limited escalation — but Rezaei's 'full-scale offensive' threat still live",
   ];
 
   return (
@@ -1609,7 +1624,7 @@ export default function App() {
             <Blink color={P.fire} size={10}/>
             <div>
               <span className="cm-title" style={{fontSize:25,fontWeight:800,color:P.fire,letterSpacing:4,fontFamily:fn}}>CONFLICT MONITOR</span>
-              <span className="cm-subtitle" style={{fontSize:11,color:P.tx3,marginLeft:12,fontFamily:fn}}>WAR RESUMED · 9 NIGHTS OF STRIKES · HORMUZ CLOSED · 'FOREVER WAR' RISK</span>
+              <span className="cm-subtitle" style={{fontSize:11,color:P.tx3,marginLeft:12,fontFamily:fn}}>MOU COLLAPSED · STRIKES RESUMED · 'NO GOOD OPTIONS' · DAY 153</span>
             </div>
           </div>
           <div className="cm-header-right" style={{display:"flex",alignItems:"center",gap:10}}>
